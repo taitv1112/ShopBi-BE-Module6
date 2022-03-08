@@ -10,6 +10,8 @@ public class Img {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
+    private String link;
+    @ManyToOne
+    private Product product;
 
 }

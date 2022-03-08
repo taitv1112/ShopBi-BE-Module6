@@ -45,6 +45,7 @@ public class User {
     private String phone;
     private String address;
     private String name_store;
+    private double rate_number;
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_role",
             joinColumns = @JoinColumn(name = "user_id"),inverseJoinColumns = @JoinColumn(name = "role_id"))
