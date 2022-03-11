@@ -1,9 +1,12 @@
 package com.example.shopbibe.controller.indexController;
 
+import com.example.shopbibe.dto.request.OrderForm;
+import com.example.shopbibe.dto.response.Top3Category;
 import com.example.shopbibe.model.Category;
 import com.example.shopbibe.model.Product;
 import com.example.shopbibe.service.PmService.ICategoryService;
 import com.example.shopbibe.service.PmService.IProductService;
+import com.example.shopbibe.service.indexService.IOrderImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -23,6 +26,8 @@ public class InDexController {
     IProductService iProductService;
     @Autowired
     ICategoryService categoryService;
+    @Autowired
+    IOrderImpl iOrder;
     // ham tra list sp theo categoryid truyen sang,sap xep theo quantitysale da phan trang
     @GetMapping("/category/{idCate}")
     public ResponseEntity<Page<Product>> findAllByCategory(@PathVariable long idCate,@RequestParam(defaultValue = "0") int pageNumber){
@@ -52,12 +57,15 @@ public class InDexController {
     public ResponseEntity<Page<Product>> findAllByName(@PathVariable String nameFind,@RequestParam(defaultValue = "0") int pageNumber){
         return new ResponseEntity<>(iProductService.findAllByNameContaining(PageRequest.of(pageNumber,5),nameFind),HttpStatus.ACCEPTED);
     }
-
-
-
-
-
-
-
+    // List  TOp Cate  ban chay nhat
+    @GetMapping("/topCate")
+    public ResponseEntity<List<Category>> top3Categories(){
+        return new ResponseEntity<>(iProductService.top3Categories(),HttpStatus.ACCEPTED);
+    }
+    // lưu Order theo OrderForm truyền vào ,Check out don hang
+    @PostMapping("/checkOutOrder")
+    public  void checkOutOrder(@RequestBody OrderForm orderForm){
+        iOrder.checkOutOrder(orderForm);
+    }
 
 }

@@ -1,17 +1,23 @@
 package com.example.shopbibe.service.PmService;
 
+import com.example.shopbibe.dto.response.Top3Category;
+import com.example.shopbibe.model.Category;
 import com.example.shopbibe.model.Product;
+import com.example.shopbibe.repository.PmRepo.ICategoryRepository;
 import com.example.shopbibe.repository.PmRepo.IProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 @Service
 public class ProductServiceImpl implements IProductService{
     @Autowired
     IProductRepository productRepository;
+    @Autowired
+    ICategoryRepository categoryRepository;
     @Override
     public List<Product> findAll() {
         return productRepository.findAll();
@@ -57,5 +63,14 @@ public class ProductServiceImpl implements IProductService{
         return productRepository.findAllByNameAndCategory(name,id);
     }
 
+    public  List<Category> top3Categories(){
+            List<Category> top3Cate = new ArrayList<>();
+            List<Top3Category> top3CategoryList = productRepository.top3CateByQuantitySale();
+        for (Top3Category cate:top3CategoryList
+             ) {
+            top3Cate.add(categoryRepository.findById(cate.getCateId()).get());
+        }
+        return  top3Cate;
+    }
 
 }
