@@ -1,11 +1,13 @@
 package com.example.shopbibe.controller.indexController;
 
+import com.example.shopbibe.dto.request.CartForm;
 import com.example.shopbibe.dto.request.OrderForm;
 import com.example.shopbibe.dto.response.Top3Category;
 import com.example.shopbibe.model.Category;
 import com.example.shopbibe.model.Product;
 import com.example.shopbibe.service.PmService.ICategoryService;
 import com.example.shopbibe.service.PmService.IProductService;
+import com.example.shopbibe.service.indexService.ICartImpl;
 import com.example.shopbibe.service.indexService.IOrderImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -28,6 +30,8 @@ public class InDexController {
     ICategoryService categoryService;
     @Autowired
     IOrderImpl iOrder;
+    @Autowired
+    ICartImpl iCart;
     // ham tra list sp theo categoryid truyen sang,sap xep theo quantitysale da phan trang
     @GetMapping("/category/{idCate}")
     public ResponseEntity<Page<Product>> findAllByCategory(@PathVariable long idCate,@RequestParam(defaultValue = "0") int pageNumber){
@@ -67,5 +71,8 @@ public class InDexController {
     public  void checkOutOrder(@RequestBody OrderForm orderForm){
         iOrder.checkOutOrder(orderForm);
     }
-
+    @PostMapping("/addToCart")
+    public  void addToCart(@RequestBody CartForm cartForm){
+       iCart.saveCart(cartForm);
+    }
 }
