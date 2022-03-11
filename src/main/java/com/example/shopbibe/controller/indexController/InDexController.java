@@ -71,6 +71,7 @@ public class InDexController {
     public  void checkOutOrder(@RequestBody OrderForm orderForm){
         iOrder.checkOutOrder(orderForm);
     }
+    // Luu Cart theo CartForm truyền vào
     @PostMapping("/addToCart")
     public  void addToCart(@RequestBody CartForm cartForm){
        iCart.saveCart(cartForm);
