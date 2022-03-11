@@ -23,6 +23,7 @@ public interface IProductService {
     Page<Product> findAllByNameContaining(Pageable pageable,String nameFind);
     public  List<Category> top3Categories();
 
-    List<Product> findAllByNameAndCategory(String name, Long id);
+    List<Product> findAllByName(String name);
+    List<Product> findAllByCategory(Long id);
 
 }

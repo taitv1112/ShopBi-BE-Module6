@@ -17,4 +17,19 @@ public class ImgServiceImpl implements IImgService {
     public List<Img> getImgByProductId(Long id) {
         return imgRepository.getImgByProductId(id);
     }
+
+    @Override
+    public void delete(long id) {
+        imgRepository.deleteById(id);
+    }
+
+    @Override
+    public Img save(Img img) {
+        return imgRepository.save(img);
+    }
+
+    @Override
+    public Img findById(long id) {
+        return imgRepository.findById(id).get();
+    }
 }

@@ -40,6 +40,7 @@ public class PmController {
         return new ResponseEntity<>(categoryService.findAll(), HttpStatus.OK);
     }
 
+
     @GetMapping("/promotion")
     public ResponseEntity<List<Promotion>> findAllPromotion(){
         return new ResponseEntity<>(promotionService.findAll(), HttpStatus.OK);
@@ -55,9 +56,14 @@ public class PmController {
         return new ResponseEntity<>(productService.findById(id),HttpStatus.OK);
     }
 
-    @GetMapping("/{id}/{name}")
-    public ResponseEntity<List<Product>> findAllByNameAndCategory(@PathVariable String name,@PathVariable long id){
-        return new ResponseEntity<>(productService.findAllByNameAndCategory(name, id),HttpStatus.OK);
+    @GetMapping("/find/{name}")
+    public ResponseEntity<List<Product>> findAllByName(@PathVariable String name){
+        return new ResponseEntity<>(productService.findAllByName(name),HttpStatus.OK);
+    }
+
+    @GetMapping("/find/category/{id}")
+    public ResponseEntity<List<Product>> findAllByCategory(@PathVariable Long id){
+        return new ResponseEntity<>(productService.findAllByCategory(id),HttpStatus.OK);
     }
 
     @PostMapping

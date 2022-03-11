@@ -8,4 +8,10 @@ import java.util.List;
 
 public interface IImgService {
     List<Img> getImgByProductId(Long id);
+
+    void delete(long id);
+
+    Img save(Img img);
+
+    Img findById(long id);
 }
