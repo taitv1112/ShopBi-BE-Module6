@@ -1,5 +1,6 @@
 package com.example.shopbibe.controller.indexController;
 
+import com.example.shopbibe.dto.request.OrderForm;
 import com.example.shopbibe.model.Product;
 import com.example.shopbibe.service.PmService.IProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,7 @@ public class InDexController {
     public ResponseEntity<Page<Product>> findAllByBestSale(@RequestParam(defaultValue = "0") int pageNumber){
         return new ResponseEntity<>(iProductService.findAllProductPage(PageRequest.of(pageNumber,10, Sort.by("quantitySale").descending())), HttpStatus.ACCEPTED);
     }
+
     @GetMapping("/detail/{idProduct}")
     public ResponseEntity<Product> detailProduct(@PathVariable long idProduct){
         return new ResponseEntity<>(iProductService.findById(idProduct),HttpStatus.ACCEPTED);
@@ -38,12 +40,9 @@ public class InDexController {
     public ResponseEntity<Page<Product>> findAllByName(@PathVariable String nameFind,@RequestParam(defaultValue = "0") int pageNumber){
         return new ResponseEntity<>(iProductService.findAllByNameContaining(PageRequest.of(pageNumber,5),nameFind),HttpStatus.ACCEPTED);
     }
+    @PostMapping("/checkOutOder")
+    public void checkOutOrder (@RequestBody OrderForm orderForm){
 
-
-
-
-
-
-
+    }
 
 }
