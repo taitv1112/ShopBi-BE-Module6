@@ -7,10 +7,29 @@ import java.util.List;
 
 public class OrderForm {
     private Orders orders;
-    private List<OrderDetail> orderDetails;
+    private List<OrderDetail> orderDetailList;
 
-    public OrderForm(Orders orders, List<OrderDetail> orderDetails) {
+    public OrderForm() {
+    }
+
+    public OrderForm(Orders orders, List<OrderDetail> orderDetailList) {
         this.orders = orders;
-        this.orderDetails = orderDetails;
+        this.orderDetailList = orderDetailList;
+    }
+
+    public Orders getOrders() {
+        return orders;
+    }
+
+    public void setOrders(Orders orders) {
+        this.orders = orders;
+    }
+
+    public List<OrderDetail> getOrderDetailList() {
+        return orderDetailList;
+    }
+
+    public void setOrderDetailList(List<OrderDetail> orderDetailList) {
+        this.orderDetailList = orderDetailList;
     }
 }

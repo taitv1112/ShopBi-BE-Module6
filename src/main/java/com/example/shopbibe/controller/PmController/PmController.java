@@ -25,7 +25,6 @@ public class PmController {
 
     @Autowired
     IPromotionService promotionService;
-
     @GetMapping("/product")
     public ResponseEntity<List<Product>> findAllProduct(){
         return new ResponseEntity<>(productService.findAll(), HttpStatus.OK);
