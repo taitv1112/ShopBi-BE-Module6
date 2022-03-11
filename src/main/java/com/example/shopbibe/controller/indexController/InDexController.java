@@ -53,8 +53,8 @@ public class InDexController {
     public ResponseEntity<Page<Product>> findAllByName(@PathVariable String nameFind,@RequestParam(defaultValue = "0") int pageNumber){
         return new ResponseEntity<>(iProductService.findAllByNameContaining(PageRequest.of(pageNumber,5),nameFind),HttpStatus.ACCEPTED);
     }
-
-    @GetMapping("/top3Cate")
+    // List  TOp Cate  ban chay nhat
+    @GetMapping("/topCate")
     public ResponseEntity<List<Category>> top3Categories(){
         return new ResponseEntity<>(iProductService.top3Categories(),HttpStatus.ACCEPTED);
     }
