@@ -3,6 +3,7 @@ package com.example.shopbibe.service.PmService;
 import com.example.shopbibe.model.Product;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
@@ -18,5 +19,7 @@ public interface IProductService {
     Page<Product> findAllByUser(Pageable pageable,long idPm);
     Page<Product> findAllProductPage(Pageable pageable);
     Page<Product> findAllByNameContaining(Pageable pageable,String nameFind);
+
+    List<Product> findAllByNameAndCategory(String name, Long id);
 
 }
