@@ -1,8 +1,6 @@
 package com.example.shopbibe.controller;
 
-import com.example.shopbibe.model.Role;
-import com.example.shopbibe.model.RoleName;
-import com.example.shopbibe.model.User;
+import com.example.shopbibe.model.*;
 import com.example.shopbibe.dto.request.ChangeAvatar;
 import com.example.shopbibe.dto.request.SignInForm;
 import com.example.shopbibe.dto.request.SignUpForm;
@@ -13,6 +11,8 @@ import com.example.shopbibe.security.userprincal.UserDetailServices;
 import com.example.shopbibe.security.userprincal.UserPrinciple;
 import com.example.shopbibe.service.impl.RoleServiceImpl;
 import com.example.shopbibe.service.impl.UserServiceImpl;
+import com.example.shopbibe.service.indexService.CartService;
+import com.example.shopbibe.service.indexService.ICartDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,13 +24,19 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @RequestMapping
 @RestController
 @CrossOrigin(origins = "*")
 public class AuthController {
+    @Autowired
+    ICartDetailService iCartDetailService;
+    @Autowired
+    CartService cartService;
     @Autowired
     UserServiceImpl userService;
     @Autowired
@@ -84,7 +90,14 @@ public class AuthController {
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String token = jwtProvider.createToken(authentication);
         UserPrinciple userPrinciple = (UserPrinciple) authentication.getPrincipal();
-        return ResponseEntity.ok(new JwtResponse(token, userPrinciple.getName(),userPrinciple.getAvatar(), userPrinciple.getAuthorities()));
+        Cart cart = cartService.findCartByUserName(signInForm.getUsername());
+        if(cart!=null){
+            List<CartDetail> cartDetailList = iCartDetailService.findCartDetailsByCart_Id(cart.getId());
+            return ResponseEntity.ok(new JwtResponse(token, userPrinciple.getName(),userPrinciple.getAvatar(), userPrinciple.getAuthorities(),cart,cartDetailList));
+        }else {
+            List<CartDetail> cartDetailList = new ArrayList<>();
+            return ResponseEntity.ok(new JwtResponse(token, userPrinciple.getName(),userPrinciple.getAvatar(), userPrinciple.getAuthorities(),cart,cartDetailList));
+        }
 
     }
     @PutMapping("/change-avatar")

@@ -1,5 +1,6 @@
 package com.example.shopbibe.dto.response;
 
+import com.example.shopbibe.model.Cart;
 import com.example.shopbibe.model.CartDetail;
 import org.springframework.security.core.GrantedAuthority;
 
@@ -13,6 +14,7 @@ public class JwtResponse {
     private String name;
     private String avatar;
     private Collection<? extends GrantedAuthority> roles;
+    private Cart cart;
     private List<CartDetail> cartDetailList;
     public JwtResponse() {
     }
@@ -25,11 +27,20 @@ public class JwtResponse {
 //        this.roles = roles;
 //    }
 
+    public JwtResponse(String token, String name, String avatar, Collection<? extends GrantedAuthority> authorities,Cart cart,List<CartDetail> cartDetailList) {
+        this.token = token;
+        this.name = name;
+        this.roles = authorities;
+        this.avatar = avatar;
+        this.cart= cart;
+        this.cartDetailList = cartDetailList;
+    }
     public JwtResponse(String token, String name, String avatar, Collection<? extends GrantedAuthority> authorities) {
         this.token = token;
         this.name = name;
         this.roles = authorities;
         this.avatar = avatar;
+
     }
 
 //    public Long getId() {
