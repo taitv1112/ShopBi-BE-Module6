@@ -1,5 +1,6 @@
 package com.example.shopbibe.controller.indexController;
 
+import com.example.shopbibe.dto.response.Top3Category;
 import com.example.shopbibe.model.Category;
 import com.example.shopbibe.model.Product;
 import com.example.shopbibe.service.PmService.ICategoryService;
@@ -53,7 +54,10 @@ public class InDexController {
         return new ResponseEntity<>(iProductService.findAllByNameContaining(PageRequest.of(pageNumber,5),nameFind),HttpStatus.ACCEPTED);
     }
 
-
+    @GetMapping("/top3Cate")
+    public ResponseEntity<List<Category>> top3Categories(){
+        return new ResponseEntity<>(iProductService.top3Categories(),HttpStatus.ACCEPTED);
+    }
 
 
 
