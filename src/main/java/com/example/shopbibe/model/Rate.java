@@ -13,5 +13,5 @@ public class Rate {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private double rate_star;
+    private double rateStar;
 }

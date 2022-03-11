@@ -35,7 +35,7 @@ public class User {
     @NotBlank
     @Size(max = 50)
     @Email
-    private String email;
+        private String email;
     @JsonIgnore
     @NotBlank
     @Size(min = 6, max = 100)
@@ -44,8 +44,8 @@ public class User {
     private String avatar;
     private String phone;
     private String address;
-    private String name_store;
-    private double rate_number;
+    private String nameStore;
+    private double rateNumber;
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_role",
             joinColumns = @JoinColumn(name = "user_id"),inverseJoinColumns = @JoinColumn(name = "role_id"))

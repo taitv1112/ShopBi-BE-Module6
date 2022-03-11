@@ -14,11 +14,11 @@ public class Product {
     private String description;
     private double price;
     private double quantity;
-    private double quantity_sale; // so luong sp da ban
-    private double quantity_max;// so luong toi da co the ban
-    private double quantity_min;// so luong toi thieu co the ban
-    private double price_sale;// gia sau khuyen mai
-    private String cover_photo;
+    private double quantitySale; // so luong sp da ban
+    private double quantityMax;// so luong toi da co the ban
+    private double quantityMin;// so luong toi thieu co the ban
+    private double priceSale;// gia sau khuyen mai
+    private String coverPhoto;
     @ManyToOne
     private Category category;
     @ManyToOne
