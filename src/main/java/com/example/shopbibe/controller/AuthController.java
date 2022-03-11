@@ -85,6 +85,7 @@ public class AuthController {
         String token = jwtProvider.createToken(authentication);
         UserPrinciple userPrinciple = (UserPrinciple) authentication.getPrincipal();
         return ResponseEntity.ok(new JwtResponse(token, userPrinciple.getName(),userPrinciple.getAvatar(), userPrinciple.getAuthorities()));
+
     }
     @PutMapping("/change-avatar")
     public ResponseEntity<?> updateAvatar(@RequestBody ChangeAvatar changeAvatar){

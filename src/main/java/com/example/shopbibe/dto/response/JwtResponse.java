@@ -1,8 +1,10 @@
 package com.example.shopbibe.dto.response;
 
+import com.example.shopbibe.model.CartDetail;
 import org.springframework.security.core.GrantedAuthority;
 
 import java.util.Collection;
+import java.util.List;
 
 public class JwtResponse {
 //    private Long id;
@@ -11,7 +13,7 @@ public class JwtResponse {
     private String name;
     private String avatar;
     private Collection<? extends GrantedAuthority> roles;
-
+    private List<CartDetail> cartDetailList;
     public JwtResponse() {
     }
 
