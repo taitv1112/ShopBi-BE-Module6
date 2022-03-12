@@ -59,8 +59,13 @@ public class ProductServiceImpl implements IProductService{
     }
 
     @Override
-    public List<Product> findAllByNameAndCategory(String name, Long id) {
-        return productRepository.findAllByNameAndCategory(name,id);
+    public List<Product> findAllByName(String name) {
+        return productRepository.findAllByName(name);
+    }
+
+    @Override
+    public List<Product> findAllByCategory(Long id) {
+        return productRepository.findAllByCategory(id);
     }
 
     public  List<Category> top3Categories(){
