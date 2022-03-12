@@ -19,10 +19,12 @@ public class Product {
     private double quantityMin;// so luong toi thieu co the ban
     private double priceSale;// gia sau khuyen mai
     private String coverPhoto;
+    private long status ;
     @ManyToOne
     private Category category;
     @ManyToOne
     private User user;
     @ManyToOne
     private Promotion promotion;
+
 }

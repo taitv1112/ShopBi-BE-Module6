@@ -1,9 +1,11 @@
 package com.example.shopbibe.controller.PmController;
 
 import com.example.shopbibe.model.Category;
+import com.example.shopbibe.model.Img;
 import com.example.shopbibe.model.Product;
 import com.example.shopbibe.model.Promotion;
 import com.example.shopbibe.service.PmService.ICategoryService;
+import com.example.shopbibe.service.PmService.IImgService;
 import com.example.shopbibe.service.PmService.IProductService;
 import com.example.shopbibe.service.PmService.IPromotionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +27,9 @@ public class PmController {
 
     @Autowired
     IPromotionService promotionService;
+
+    @Autowired
+    IImgService imgService;
     @GetMapping("/product")
     public ResponseEntity<List<Product>> findAllProduct(){
         return new ResponseEntity<>(productService.findAll(), HttpStatus.OK);
@@ -40,9 +45,19 @@ public class PmController {
         return new ResponseEntity<>(promotionService.findAll(), HttpStatus.OK);
     }
 
+    @GetMapping("/img/{id}")
+    public ResponseEntity<List<Img>> findAllImg(@PathVariable long id){
+        return new ResponseEntity<>(imgService.getImgByProductId(id), HttpStatus.OK);
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<Product> findById(@PathVariable long id){
         return new ResponseEntity<>(productService.findById(id),HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}/{name}")
+    public ResponseEntity<List<Product>> findAllByNameAndCategory(@PathVariable String name,@PathVariable long id){
+        return new ResponseEntity<>(productService.findAllByNameAndCategory(name, id),HttpStatus.OK);
     }
 
     @PostMapping

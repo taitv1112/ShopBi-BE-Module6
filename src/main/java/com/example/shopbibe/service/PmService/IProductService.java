@@ -5,6 +5,7 @@ import com.example.shopbibe.model.Category;
 import com.example.shopbibe.model.Product;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
@@ -21,4 +22,7 @@ public interface IProductService {
     Page<Product> findAllProductPage(Pageable pageable);
     Page<Product> findAllByNameContaining(Pageable pageable,String nameFind);
     public  List<Category> top3Categories();
+
+    List<Product> findAllByNameAndCategory(String name, Long id);
+
 }

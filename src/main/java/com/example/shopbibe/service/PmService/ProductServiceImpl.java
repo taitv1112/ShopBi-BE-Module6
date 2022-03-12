@@ -57,6 +57,12 @@ public class ProductServiceImpl implements IProductService{
     public Page<Product> findAllByNameContaining(Pageable pageable, String nameFind) {
         return productRepository.findAllByNameContaining(pageable,nameFind);
     }
+
+    @Override
+    public List<Product> findAllByNameAndCategory(String name, Long id) {
+        return productRepository.findAllByNameAndCategory(name,id);
+    }
+
     public  List<Category> top3Categories(){
             List<Category> top3Cate = new ArrayList<>();
             List<Top3Category> top3CategoryList = productRepository.top3CateByQuantitySale();
