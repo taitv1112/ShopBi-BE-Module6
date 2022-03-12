@@ -5,5 +5,5 @@ import com.example.shopbibe.model.Orders;
 
 public interface IOrderDetailImpl {
     void saveOrderDetail(OrderDetail orderDetail);
-
+    void  deleteOrderDetail(long id);
 }

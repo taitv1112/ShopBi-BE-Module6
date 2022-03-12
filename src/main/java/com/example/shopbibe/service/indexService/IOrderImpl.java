@@ -8,5 +8,6 @@ import java.util.List;
 public interface IOrderImpl {
     void saveOrder( Orders orders);
     void  checkOutOrder(OrderForm orderForm);
-    List<Orders> findAllByStatus();
+    List<Orders> findAllByStatus(long id,String status);
+    void deleteOrder(long id);
 }

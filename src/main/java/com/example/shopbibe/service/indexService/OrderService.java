@@ -42,9 +42,18 @@ public class OrderService implements IOrderImpl{
     }
 
     @Override
-    public List<Orders> findAllByStatus() {
+    public List<Orders> findAllByStatus(long id,String status) {
+        return iOrderRepo.findAllOrderByUserIdAndStatus(id,status);
+    }
 
-        return null;
+    @Override
+    public void deleteOrder(long id) {
+            List<OrderDetail> orderDetailList = iOrderDetailRepo.findAllOrderDetailByOrderId(id);
+        for (OrderDetail orDetail: orderDetailList
+             ) {
+            iOrderDetailRepo.deleteById(orDetail.getId());
+        }
+        iOrderRepo.deleteById(id);
     }
 
 

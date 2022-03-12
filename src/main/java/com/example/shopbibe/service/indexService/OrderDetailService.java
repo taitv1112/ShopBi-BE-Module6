@@ -14,4 +14,9 @@ public class OrderDetailService implements IOrderDetailImpl{
     public void saveOrderDetail(OrderDetail orderDetail) {
          iOrderDetailRepo.save(orderDetail);
     }
+
+    @Override
+    public void deleteOrderDetail(long  id) {
+        iOrderDetailRepo.deleteById(id);
+    }
 }
