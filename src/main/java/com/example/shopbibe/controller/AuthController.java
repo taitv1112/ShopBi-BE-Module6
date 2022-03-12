@@ -1,8 +1,6 @@
 package com.example.shopbibe.controller;
 
-import com.example.shopbibe.model.Role;
-import com.example.shopbibe.model.RoleName;
-import com.example.shopbibe.model.User;
+import com.example.shopbibe.model.*;
 import com.example.shopbibe.dto.request.ChangeAvatar;
 import com.example.shopbibe.dto.request.SignInForm;
 import com.example.shopbibe.dto.request.SignUpForm;
@@ -13,6 +11,8 @@ import com.example.shopbibe.security.userprincal.UserDetailServices;
 import com.example.shopbibe.security.userprincal.UserPrinciple;
 import com.example.shopbibe.service.impl.RoleServiceImpl;
 import com.example.shopbibe.service.impl.UserServiceImpl;
+import com.example.shopbibe.service.indexService.ICartDetailtService;
+import com.example.shopbibe.service.indexService.ICartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,13 +24,19 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @RequestMapping
 @RestController
 @CrossOrigin(origins = "*")
 public class AuthController {
+    @Autowired
+    ICartService iCartService;
+    @Autowired
+    ICartDetailtService iCartDetailtService;
     @Autowired
     UserServiceImpl userService;
     @Autowired
@@ -75,7 +81,12 @@ public class AuthController {
             }
         });
         user.setRoles(roles);
+        Cart cart = new Cart();
+        iCartService.saveCart(cart);
+        user.setCart(cart);
         userService.save(user);
+
+
         return new ResponseEntity<>(new ResponMessage("yes"), HttpStatus.OK);
     }
     @PostMapping("/signin")
@@ -84,7 +95,9 @@ public class AuthController {
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String token = jwtProvider.createToken(authentication);
         UserPrinciple userPrinciple = (UserPrinciple) authentication.getPrincipal();
-        return ResponseEntity.ok(new JwtResponse(token, userPrinciple.getName(),userPrinciple.getAvatar(), userPrinciple.getAuthorities()));
+        List<CartDetail> cartDetailList = iCartDetailtService.findCartDetailsByCart_Id(userPrinciple.getCart().getId());
+
+        return ResponseEntity.ok(new JwtResponse(token, userPrinciple.getName(),userPrinciple.getAvatar(), userPrinciple.getAuthorities(),userPrinciple.getCart(),cartDetailList));
     }
     @PutMapping("/change-avatar")
     public ResponseEntity<?> updateAvatar(@RequestBody ChangeAvatar changeAvatar){

@@ -46,6 +46,8 @@ public class User {
     private String address;
     private String nameStore;
     private double rateNumber;
+    @OneToOne
+    Cart cart;
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_role",
             joinColumns = @JoinColumn(name = "user_id"),inverseJoinColumns = @JoinColumn(name = "role_id"))
@@ -60,6 +62,18 @@ public class User {
         this.email = email;
         this.password = encode;
         this.avatar =avatar;
+    }
+    public User(  @NotBlank @Size(min = 3, max = 50)String name,
+                  @NotBlank @Size(min = 3, max = 50)String username,
+                  @NotBlank @Size(max = 50) @Email String email,
+                  @NotBlank @Size(min = 6, max = 100)String encode,
+                  String avatar,Cart cart) {
+        this.name = name;
+        this.username = username;
+        this.email = email;
+        this.password = encode;
+        this.avatar =avatar;
+        this.cart = cart;
     }
 
     public User() {

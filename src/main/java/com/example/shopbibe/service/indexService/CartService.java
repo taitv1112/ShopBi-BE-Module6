@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class CartService implements ICartImpl {
+public class CartService implements ICartService {
     @Autowired
     ICartRepo iCartRepo;
     @Autowired
@@ -26,5 +26,10 @@ public class CartService implements ICartImpl {
              ) {
             iCartDetailRepo.save(cartDetail);
         }
+    }
+
+    @Override
+    public void saveCart(Cart cart) {
+        iCartRepo.save(cart);
     }
 }
