@@ -40,4 +40,12 @@ public class OrderService implements IOrderImpl{
             iProductRepository.save(product);
         }
     }
+
+    @Override
+    public List<Orders> findAllByStatus() {
+
+        return null;
+    }
+
+
 }
