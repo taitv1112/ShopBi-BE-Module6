@@ -18,16 +18,12 @@ public class OrderInPmController {
     public List<Orders> findAllByStatus(@PathVariable long id,@RequestParam String status){
         return iOrder.findAllByStatus(id,status);
     }
+
     // ham edit Order theo Doi tuong order truyen sang
     @PutMapping
     public Orders  editOrder(@RequestBody Orders orders){
             iOrder.saveOrder(orders);
             return orders;
-    }
-    // ham xoa Order theo idOrder truyền sang
-    @DeleteMapping("/{idOrder}")
-    public void  deleteOrder(@PathVariable long idOrder){
-            iOrder.deleteOrder(idOrder);
     }
 
 }

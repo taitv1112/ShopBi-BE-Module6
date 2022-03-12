@@ -1,6 +1,7 @@
 package com.example.shopbibe.security.userprincal;
 
 
+import com.example.shopbibe.model.Cart;
 import com.example.shopbibe.model.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.security.core.GrantedAuthority;
@@ -16,6 +17,7 @@ public class UserPrinciple implements UserDetails {
     private String name;
     private String username;
     private String email;
+    private Cart cart;
     @JsonIgnore
     private String password;
     private String avatar;
@@ -24,7 +26,7 @@ public class UserPrinciple implements UserDetails {
     public UserPrinciple() {
     }
 
-    public UserPrinciple(Long id, String name, String username, String email, String password, String avatar, Collection<? extends GrantedAuthority> roles) {
+    public UserPrinciple(Long id, String name, String username, String email, String password, String avatar, Collection<? extends GrantedAuthority> roles,Cart cart) {
         this.id = id;
         this.name = name;
         this.username = username;
@@ -32,6 +34,7 @@ public class UserPrinciple implements UserDetails {
         this.password = password;
         this.avatar = avatar;
         this.roles = roles;
+        this.cart = cart;
     }
     public static UserPrinciple build(User user){
         List<GrantedAuthority> authorities = user.getRoles().stream().map(role->
@@ -43,8 +46,17 @@ public class UserPrinciple implements UserDetails {
                 user.getEmail(),
                 user.getPassword(),
                 user.getAvatar(),
-                authorities
+                authorities,
+                user.getCart()
         );
+    }
+
+    public Cart getCart() {
+        return cart;
+    }
+
+    public void setCart(Cart cart) {
+        this.cart = cart;
     }
 
     public String getAvatar() {

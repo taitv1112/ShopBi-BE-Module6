@@ -2,17 +2,15 @@ package com.example.shopbibe.controller.indexController;
 
 import com.example.shopbibe.dto.request.CartForm;
 import com.example.shopbibe.dto.request.OrderForm;
-import com.example.shopbibe.dto.response.Top3Category;
 import com.example.shopbibe.model.Category;
 import com.example.shopbibe.model.Product;
 import com.example.shopbibe.service.PmService.ICategoryService;
 import com.example.shopbibe.service.PmService.IProductService;
-import com.example.shopbibe.service.indexService.ICartImpl;
+import com.example.shopbibe.service.indexService.ICartService;
 import com.example.shopbibe.service.indexService.IOrderImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,7 +29,7 @@ public class InDexController {
     @Autowired
     IOrderImpl iOrder;
     @Autowired
-    ICartImpl iCart;
+    ICartService iCart;
     // ham tra list sp theo categoryid truyen sang,sap xep theo quantitysale da phan trang
     @GetMapping("/category/{idCate}")
     public ResponseEntity<Page<Product>> findAllByCategory(@PathVariable long idCate,@RequestParam(defaultValue = "0") int pageNumber){
