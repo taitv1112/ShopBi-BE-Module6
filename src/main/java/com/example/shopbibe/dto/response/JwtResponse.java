@@ -13,6 +13,7 @@ public class JwtResponse {
     private String type = "Bearer";
     private String name;
     private String avatar;
+    private Long idCart;
     private Cart cart;
     private List<CartDetail> cartDetailList;
 
@@ -29,6 +30,39 @@ public class JwtResponse {
 //        this.roles = roles;
 //    }
 
+
+    public Long getIdCart() {
+        return idCart;
+    }
+
+    public void setIdCart(Long idCart) {
+        this.idCart = idCart;
+    }
+
+    public Cart getCart() {
+        return cart;
+    }
+
+    public void setCart(Cart cart) {
+        this.cart = cart;
+    }
+
+    public List<CartDetail> getCartDetailList() {
+        return cartDetailList;
+    }
+
+    public void setCartDetailList(List<CartDetail> cartDetailList) {
+        this.cartDetailList = cartDetailList;
+    }
+
+    public JwtResponse(String token, String name, String avatar, Collection<? extends GrantedAuthority> authorities, Long idCart) {
+        this.token = token;
+        this.name = name;
+        this.roles = authorities;
+        this.avatar = avatar;
+        this.idCart = idCart;
+
+    }
     public JwtResponse(String token, String name, String avatar, Collection<? extends GrantedAuthority> authorities,Cart cart,List<CartDetail> cartDetailList) {
         this.token = token;
         this.name = name;
@@ -36,6 +70,7 @@ public class JwtResponse {
         this.avatar = avatar;
         this.cart = cart;
         this.cartDetailList = cartDetailList;
+
     }
 
 

@@ -2,10 +2,12 @@ package com.example.shopbibe.controller.indexController;
 
 import com.example.shopbibe.dto.request.CartForm;
 import com.example.shopbibe.dto.request.OrderForm;
+import com.example.shopbibe.model.CartDetail;
 import com.example.shopbibe.model.Category;
 import com.example.shopbibe.model.Product;
 import com.example.shopbibe.service.PmService.ICategoryService;
 import com.example.shopbibe.service.PmService.IProductService;
+import com.example.shopbibe.service.indexService.ICartDetailtService;
 import com.example.shopbibe.service.indexService.ICartService;
 import com.example.shopbibe.service.indexService.IOrderImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,8 @@ import java.util.List;
 @CrossOrigin("*")
 @RequestMapping("/index")
 public class InDexController {
+    @Autowired
+    ICartDetailtService iCartDetailtService;
     @Autowired
     IProductService iProductService;
     @Autowired
@@ -63,6 +67,11 @@ public class InDexController {
     @GetMapping("/topCate")
     public ResponseEntity<List<Category>> top3Categories(){
         return new ResponseEntity<>(iProductService.top3Categories(),HttpStatus.ACCEPTED);
+    }
+
+    @GetMapping("/cartdetail/{idCart}")
+    public ResponseEntity<List<CartDetail>> getListCartDetailByCartId(@PathVariable Long idCart){
+        return new ResponseEntity<>(iCartDetailtService.findCartDetailsByCart_Id(idCart),HttpStatus.ACCEPTED);
     }
     // lưu Order theo OrderForm truyền vào ,Check out don hang
     @PostMapping("/checkOutOrder")
