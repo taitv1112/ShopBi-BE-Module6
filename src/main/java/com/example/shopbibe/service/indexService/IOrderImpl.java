@@ -9,5 +9,5 @@ public interface IOrderImpl {
     void saveOrder( Orders orders);
     void  checkOutOrder(OrderForm orderForm);
     List<Orders> findAllByStatus(long id,String status);
-    void deleteOrder(long id);
+
 }

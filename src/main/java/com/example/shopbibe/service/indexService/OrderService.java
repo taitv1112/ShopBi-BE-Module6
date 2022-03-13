@@ -46,14 +46,6 @@ public class OrderService implements IOrderImpl{
         return iOrderRepo.findAllOrderByUserIdAndStatus(id,status);
     }
 
-    @Override
-    public void deleteOrder(long id) {
-            List<OrderDetail> orderDetailList = iOrderDetailRepo.findAllOrderDetailByOrderId(id);
-        for (OrderDetail orDetail: orderDetailList
-             ) {
-            iOrderDetailRepo.deleteById(orDetail.getId());
-        }
-        iOrderRepo.deleteById(id);
-    }
+
 
 }

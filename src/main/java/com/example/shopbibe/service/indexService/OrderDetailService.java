@@ -5,6 +5,8 @@ import com.example.shopbibe.repository.indexRepo.IOrderDetailRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class OrderDetailService implements IOrderDetailImpl{
     @Autowired
@@ -16,7 +18,9 @@ public class OrderDetailService implements IOrderDetailImpl{
     }
 
     @Override
-    public void deleteOrderDetail(long  id) {
-        iOrderDetailRepo.deleteById(id);
+    public List<OrderDetail> findAllOrderDetailByOrderId(long userId, long orderId) {
+        return iOrderDetailRepo.findAllOrderDetailByOrderId(userId,orderId);
     }
+
+
 }
