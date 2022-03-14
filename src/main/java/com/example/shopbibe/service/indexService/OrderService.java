@@ -27,9 +27,13 @@ public class OrderService implements IOrderImpl{
 
     @Override
     public void checkOutOrder(OrderForm orderForm) {
-        Orders orders = orderForm.getOrders();
-        orders.setStatus("Pending");
-        saveOrder(orders);
+        List<Orders> ordersList = orderForm.getOrders();
+        for (Orders order: ordersList
+             ) {
+            order.setStatus("Pending");
+            saveOrder(order);
+        }
+
         List<OrderDetail> orderDetailList = orderForm.getOrderDetailList();
         for (OrderDetail orderDetailO: orderDetailList
              ) {

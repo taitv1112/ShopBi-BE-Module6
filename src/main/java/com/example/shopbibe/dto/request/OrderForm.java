@@ -6,22 +6,22 @@ import com.example.shopbibe.model.Orders;
 import java.util.List;
 
 public class OrderForm {
-    private Orders orders;
+    private List<Orders> orders;
     private List<OrderDetail> orderDetailList;
 
     public OrderForm() {
     }
 
-    public OrderForm(Orders orders, List<OrderDetail> orderDetailList) {
+    public OrderForm(List<Orders> orders, List<OrderDetail> orderDetailList) {
         this.orders = orders;
         this.orderDetailList = orderDetailList;
     }
 
-    public Orders getOrders() {
+    public List<Orders> getOrders() {
         return orders;
     }
 
-    public void setOrders(Orders orders) {
+    public void setOrders(List<Orders> orders) {
         this.orders = orders;
     }
 
