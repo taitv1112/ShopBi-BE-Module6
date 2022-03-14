@@ -26,6 +26,6 @@ public interface IProductRepository extends JpaRepository<Product, Long> {
    List<Product> findAllByCategory(@Param("id") Long id);
 
 
-   @Query(nativeQuery = true,value = "SELECT sum(quantity_sale) as sumQ,category_id as cateId FROM shopbi.product  group by category_id order by sumQ desc limit 2 ")
+   @Query(nativeQuery = true,value = "SELECT sum(quantity_sale) as sumQ,category_id as cateId FROM shopbi.product  group by category_id order by sumQ desc limit 3 ")
    List<Top3Category> top3CateByQuantitySale();
 }
