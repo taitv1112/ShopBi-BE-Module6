@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -19,5 +20,7 @@ public interface IUserRepository extends JpaRepository<User, Long> {
 
     Page<User> findAll(Pageable pageable);
 
-
+    List<User> findAllByEmailContaining(String email);
+    @Query(nativeQuery = true,value = "SELECT * FROM shopbi.users where users.id in( SELECT user_buyer_id FROM shopbi.orders where user_pm_id =:id group by user_buyer_id)")
+    List<User> findAllUserBuyInPm(@Param("id") long id);
 }

@@ -8,6 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -44,6 +45,14 @@ public class UserServiceImpl implements IUserService {
         return userRepository.findById(id).get();
     }
 
+    @Override
+    public List<User> findAllByEmailContaining(String email) {
+        return userRepository.findAllByEmailContaining(email);
+    }
 
+    @Override
+    public List<User> findAllUserBuyInPm(long id) {
+        return userRepository.findAllUserBuyInPm(id);
+    }
 
 }

@@ -15,12 +15,18 @@ public class Orders {
     private double totalBill;
     private String status;
     @ManyToOne
-    private User user;
-    @ManyToOne
     private User userBuyer;
 
     @ManyToOne
     private User userPm;
+
+    public Orders( String address_ship, double totalBill, String status, User userBuyer, User userPm) {
+        this.address_ship = address_ship;
+        this.totalBill = totalBill;
+        this.status = status;
+        this.userBuyer = userBuyer;
+        this.userPm = userPm;
+    }
 
 
 }
