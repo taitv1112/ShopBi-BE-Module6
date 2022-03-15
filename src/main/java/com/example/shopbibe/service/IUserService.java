@@ -15,5 +15,4 @@ public interface IUserService {
     User save(User user);
     Page<User> findAll(Pageable pageable);
     User findUserByID(long id);
-    void upToPm(long id);
 }

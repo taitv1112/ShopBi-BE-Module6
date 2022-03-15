@@ -19,6 +19,5 @@ public interface IUserRepository extends JpaRepository<User, Long> {
 
     Page<User> findAll(Pageable pageable);
 
-    @Query(nativeQuery = true,value = "INSERT INTO shopbi.user_role (user_id, role_id) VALUES (:id, 2)")
-    void upToPm(@Param("id") long id);
+
 }

@@ -37,5 +37,14 @@ public class AdminController {
         user.setRoles(roleSet);
         iUserService.save(user);
     }
+    @GetMapping("/downToUser/{id}")
+    public void downToUser(@PathVariable long id){
+        User  user = iUserService.findUserByID(id);
+        Set<Role> roleSet = new HashSet<>();
+        roleSet.add(new Role(1L,RoleName.USER));
+        user.setRoles(roleSet);
+        iUserService.save(user);
+    }
+
 
 }
