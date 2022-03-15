@@ -1,5 +1,6 @@
 package com.example.shopbibe.controller.PmController;
 
+import com.example.shopbibe.dto.request.ImgForm;
 import com.example.shopbibe.model.Img;
 import com.example.shopbibe.model.Product;
 import com.example.shopbibe.service.PmService.IImgService;
@@ -16,8 +17,11 @@ public class ImgController {
     IImgService imgService;
 
     @PostMapping
-    public ResponseEntity<Img> save(@RequestBody Img img){
-        return new ResponseEntity<>(imgService.save(img), HttpStatus.OK);
+    public ResponseEntity<?> save(@RequestBody ImgForm imgForm){
+        for (int i =0 ;i<imgForm.getImgList().size(); i++){
+            imgService.save(new Img(imgForm.getImgList().get(i),imgForm.getProduct()));
+        }
+        return new ResponseEntity<>( HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
