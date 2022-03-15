@@ -15,6 +15,8 @@ public class Orders {
     private double totalBill;
     private String status;
     @ManyToOne
+    private User user;
+    @ManyToOne
     private User userBuyer;
 
     @ManyToOne
