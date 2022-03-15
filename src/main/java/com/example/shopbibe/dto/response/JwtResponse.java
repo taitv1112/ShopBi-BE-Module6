@@ -9,6 +9,7 @@ import java.util.List;
 
 public class JwtResponse {
 //    private Long id;
+    private String username;
     private String token;
     private String type = "Bearer";
     private String name;
@@ -63,17 +64,24 @@ public class JwtResponse {
         this.idCart = idCart;
 
     }
-    public JwtResponse(String token, String name, String avatar, Collection<? extends GrantedAuthority> authorities,Cart cart,List<CartDetail> cartDetailList) {
+    public JwtResponse(String token, String name, String avatar, Collection<? extends GrantedAuthority> authorities,Cart cart,List<CartDetail> cartDetailList,String username) {
         this.token = token;
         this.name = name;
         this.roles = authorities;
         this.avatar = avatar;
         this.cart = cart;
         this.cartDetailList = cartDetailList;
+        this.username = username;
 
     }
 
+    public String getUsername() {
+        return username;
+    }
 
+    public void setUsername(String username) {
+        this.username = username;
+    }
 //    public Long getId() {
 //        return id;
 //    }
