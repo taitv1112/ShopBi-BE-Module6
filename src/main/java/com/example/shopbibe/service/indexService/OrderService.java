@@ -4,6 +4,7 @@ import com.example.shopbibe.dto.request.OrderForm;
 import com.example.shopbibe.model.OrderDetail;
 import com.example.shopbibe.model.Orders;
 import com.example.shopbibe.model.Product;
+import com.example.shopbibe.model.User;
 import com.example.shopbibe.repository.PmRepo.IProductRepository;
 import com.example.shopbibe.repository.indexRepo.IOrderDetailRepo;
 import com.example.shopbibe.repository.indexRepo.IOrderRepo;
@@ -49,6 +50,7 @@ public class OrderService implements IOrderImpl{
     public List<Orders> findAllByStatus(long id,String status) {
         return iOrderRepo.findAllOrderByUserIdAndStatus(id,status);
     }
+
 
 
 
