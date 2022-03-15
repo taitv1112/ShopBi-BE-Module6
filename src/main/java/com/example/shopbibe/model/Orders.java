@@ -11,7 +11,7 @@ public class Orders {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private String address_ship;
+    private String addressShip;
     private double totalBill;
     private String status;
     @ManyToOne

@@ -35,7 +35,7 @@ public class User {
     @NotBlank
     @Size(max = 50)
     @Email
-    private String email;
+        private String email;
     @JsonIgnore
     @NotBlank
     @Size(min = 6, max = 100)
