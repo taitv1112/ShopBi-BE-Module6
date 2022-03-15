@@ -14,4 +14,11 @@ public class Img {
     @ManyToOne
     private Product product;
 
+    public Img() {
+    }
+
+    public Img(String link, Product product) {
+        this.link = link;
+        this.product = product;
+    }
 }
