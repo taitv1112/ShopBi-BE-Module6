@@ -16,6 +16,7 @@ public class UserPrinciple implements UserDetails {
     private Long id;
     private String name;
     private String username;
+    private String address;
     private String email;
     private Cart cart;
     @JsonIgnore
@@ -26,7 +27,15 @@ public class UserPrinciple implements UserDetails {
     public UserPrinciple() {
     }
 
-    public UserPrinciple(Long id, String name, String username, String email, String password, String avatar, Collection<? extends GrantedAuthority> roles,Cart cart) {
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public UserPrinciple(Long id, String name, String username, String email, String password, String avatar, Collection<? extends GrantedAuthority> roles, Cart cart, String address) {
         this.id = id;
         this.name = name;
         this.username = username;
@@ -35,6 +44,7 @@ public class UserPrinciple implements UserDetails {
         this.avatar = avatar;
         this.roles = roles;
         this.cart = cart;
+        this.address = address;
     }
     public static UserPrinciple build(User user){
         List<GrantedAuthority> authorities = user.getRoles().stream().map(role->
@@ -47,7 +57,8 @@ public class UserPrinciple implements UserDetails {
                 user.getPassword(),
                 user.getAvatar(),
                 authorities,
-                user.getCart()
+                user.getCart(),
+                user.getAddress()
         );
     }
 

@@ -13,7 +13,7 @@ public class OrderDetailService implements IOrderDetailImpl{
     IOrderDetailRepo iOrderDetailRepo;
 
     @Override
-    public void saveOrderDetail(OrderDetail orderDetail) {
+    public void save(OrderDetail orderDetail) {
          iOrderDetailRepo.save(orderDetail);
     }
 

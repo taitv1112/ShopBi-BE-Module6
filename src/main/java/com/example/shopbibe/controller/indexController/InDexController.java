@@ -1,14 +1,14 @@
 package com.example.shopbibe.controller.indexController;
 
 import com.example.shopbibe.dto.request.CartForm;
-import com.example.shopbibe.dto.request.OrderForm;
-import com.example.shopbibe.model.CartDetail;
-import com.example.shopbibe.model.Category;
-import com.example.shopbibe.model.Product;
+import com.example.shopbibe.dto.request.OrderPMs;
+import com.example.shopbibe.model.*;
+import com.example.shopbibe.service.IUserService;
 import com.example.shopbibe.service.PmService.ICategoryService;
 import com.example.shopbibe.service.PmService.IProductService;
 import com.example.shopbibe.service.indexService.ICartDetailtService;
 import com.example.shopbibe.service.indexService.ICartService;
+import com.example.shopbibe.service.indexService.IOrderDetailImpl;
 import com.example.shopbibe.service.indexService.IOrderImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -17,13 +17,16 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
 @CrossOrigin("*")
 @RequestMapping("/index")
 public class InDexController {
+    @Autowired
+    IUserService iUserService;
+    @Autowired
+    IOrderDetailImpl iOrderDetail;
     @Autowired
     ICartDetailtService iCartDetailtService;
     @Autowired
@@ -73,10 +76,18 @@ public class InDexController {
     public ResponseEntity<List<CartDetail>> getListCartDetailByCartId(@PathVariable Long idCart){
         return new ResponseEntity<>(iCartDetailtService.findCartDetailsByCart_Id(idCart),HttpStatus.ACCEPTED);
     }
-    // lưu Order theo OrderForm truyền vào ,Check out don hang
+    // lưu Order theo OrderPMs truyền vào ,Check out don hang
     @PostMapping("/checkOutOrder")
-    public  void checkOutOrder(@RequestBody OrderForm orderForm){
-        iOrder.checkOutOrder(orderForm);
+    public  ResponseEntity<?> checkOutOrder(@RequestBody OrderPMs orderForm){
+        //String address_ship, double totalBill, String status, User userBuyer, User userPm
+        User userBuyer = iUserService.findByUsername(orderForm.getUsernameBuyer()).get();
+        User userPm = iUserService.findByUsername(orderForm.getUsernameSaler()).get();
+       Orders order = new Orders(orderForm.getAddress_ship(),orderForm.getBillTotal(),"Pending",userBuyer,userPm);
+       iOrder.save(order);
+        for (CartDetail cartDetail: orderForm.getCartDetails()) {
+                iOrderDetail.save(new OrderDetail(order,cartDetail.getProduct(),cartDetail.getQuantity()));
+        }
+        return new ResponseEntity<>(orderForm,HttpStatus.ACCEPTED);
     }
     // Luu Cart theo CartForm truyền vào
     @PostMapping("/addToCart")
