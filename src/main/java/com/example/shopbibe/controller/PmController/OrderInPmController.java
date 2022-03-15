@@ -31,7 +31,7 @@ public class OrderInPmController {
     // ham edit Order theo Doi tuong order truyen sang
     @PutMapping
     public Orders  editOrder(@RequestBody Orders orders){
-            iOrder.saveOrder(orders);
+            iOrder.save(orders);
             return orders;
     }
     @GetMapping("/detailOrder/{orderId}")

@@ -96,7 +96,7 @@ public class AuthController {
         String token = jwtProvider.createToken(authentication);
         UserPrinciple userPrinciple = (UserPrinciple) authentication.getPrincipal();
         List<CartDetail> cartDetailList = iCartDetailtService.findCartDetailsByCart_Id(userPrinciple.getCart().getId());
-        JwtResponse jwtResponse = new JwtResponse(token, userPrinciple.getName(),userPrinciple.getAvatar(), userPrinciple.getAuthorities(),userPrinciple.getCart(),cartDetailList,userPrinciple.getUsername());
+        JwtResponse jwtResponse = new JwtResponse(token, userPrinciple.getName(),userPrinciple.getAvatar(), userPrinciple.getAuthorities(),userPrinciple.getCart(),cartDetailList,userPrinciple.getUsername(),userPrinciple.getAddress());
         System.out.println(jwtResponse);
         return ResponseEntity.ok(jwtResponse);
     }
