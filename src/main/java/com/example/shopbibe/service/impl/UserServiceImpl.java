@@ -34,4 +34,19 @@ public class UserServiceImpl implements IUserService {
         return userRepository.save(user);
     }
 
+    @Override
+    public Page<User> findAll(Pageable pageable) {
+        return userRepository.findAll(pageable);
+    }
+
+    @Override
+    public User findUserByID(long id) {
+        return userRepository.findById(id).get();
+    }
+
+    @Override
+    public void upToPm(long id) {
+        userRepository.upToPm(id);
+    }
+
 }

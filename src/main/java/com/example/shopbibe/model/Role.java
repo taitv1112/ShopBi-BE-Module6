@@ -16,4 +16,12 @@ public class Role {
     @NaturalId
     @Column(length = 60)
     private RoleName name;
+
+    public Role() {
+    }
+
+    public Role(Long id, RoleName name) {
+        this.id = id;
+        this.name = name;
+    }
 }
