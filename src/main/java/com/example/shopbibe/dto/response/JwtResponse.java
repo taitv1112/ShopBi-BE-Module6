@@ -17,6 +17,15 @@ public class JwtResponse {
     private Long idCart;
     private Cart cart;
     private List<CartDetail> cartDetailList;
+    private String address;
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
 
     private Collection<? extends GrantedAuthority> roles;
 
@@ -64,7 +73,7 @@ public class JwtResponse {
         this.idCart = idCart;
 
     }
-    public JwtResponse(String token, String name, String avatar, Collection<? extends GrantedAuthority> authorities,Cart cart,List<CartDetail> cartDetailList,String username) {
+    public JwtResponse(String token, String name, String avatar, Collection<? extends GrantedAuthority> authorities,Cart cart,List<CartDetail> cartDetailList,String username,String address) {
         this.token = token;
         this.name = name;
         this.roles = authorities;
@@ -72,6 +81,7 @@ public class JwtResponse {
         this.cart = cart;
         this.cartDetailList = cartDetailList;
         this.username = username;
+        this.address = address;
 
     }
 
