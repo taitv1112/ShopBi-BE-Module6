@@ -44,9 +44,6 @@ public class UserServiceImpl implements IUserService {
         return userRepository.findById(id).get();
     }
 
-    @Override
-    public void upToPm(long id) {
-        userRepository.upToPm(id);
-    }
+
 
 }
