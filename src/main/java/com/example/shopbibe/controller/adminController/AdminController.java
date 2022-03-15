@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @RestController
@@ -44,6 +45,10 @@ public class AdminController {
         roleSet.add(new Role(1L,RoleName.USER));
         user.setRoles(roleSet);
         iUserService.save(user);
+    }
+    @GetMapping("/findByEmail")
+    public List<User> findByEmail(@RequestParam(defaultValue = "") String email ){
+        return iUserService.findAllByEmailContaining(email);
     }
 
 

@@ -9,6 +9,6 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface IOrderRepo extends JpaRepository<Orders,Long> {
-    @Query(nativeQuery = true,value = "select orders.* from order_detail join orders on orders.id=order_detail.orders_id  where orders.status=:status and (order_detail.product_id in (select product.id from product where user_id =:id))  group by orders.id")
+    @Query(nativeQuery = true,value = "SELECT * FROM shopbi.orders where user_pm_id =:id and status =:status;")
     List<Orders> findAllOrderByUserIdAndStatus(@Param("id") long id,@Param("status") String status );
 }
