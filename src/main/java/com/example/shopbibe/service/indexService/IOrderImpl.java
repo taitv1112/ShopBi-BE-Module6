@@ -10,4 +10,8 @@ public interface IOrderImpl {
     void save( Orders orders);
     List<Orders> findAllByStatus(long id,String status);
 
+    List<Orders> findAllByUserPmAndUserBuyer(long idPm, long idBuyer);
+
+    List<Orders> findAllOrderById(@Param("id") long id);
+
 }

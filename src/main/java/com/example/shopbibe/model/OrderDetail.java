@@ -23,6 +23,9 @@ public class OrderDetail {
         this.quantity = quantity;
     }
 
+    public OrderDetail() {
+    }
+
     public Long getId() {
         return id;
     }

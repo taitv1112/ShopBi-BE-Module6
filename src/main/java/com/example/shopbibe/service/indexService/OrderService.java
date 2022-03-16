@@ -28,7 +28,15 @@ public class OrderService implements IOrderImpl{
         return iOrderRepo.findAllOrderByUserIdAndStatus(id,status);
     }
 
+    @Override
+    public List<Orders> findAllByUserPmAndUserBuyer(long idPm, long idBuyer) {
+        return iOrderRepo.findAllByUserPmAndUserBuyer(idPm,idBuyer);
+    }
 
+    @Override
+    public List<Orders> findAllOrderById(long id) {
+        return iOrderRepo.findAllOrderById(id);
+    }
 
 
 }

@@ -23,9 +23,10 @@ public class OrderInPmController {
     @Autowired
     IUserService iUserService;
     // ham tra ve list order theo userId va status truyen vao
-    @GetMapping("/listOrder/{id}")
-    public List<Orders> findAllByStatus(@PathVariable long id,@RequestParam(defaultValue = "Pending") String status){
-        return iOrder.findAllByStatus(id,status);
+    @GetMapping("/listOrder/{username}")
+    public List<Orders> findAllByStatus(@PathVariable String username,@RequestParam(defaultValue = "Pending") String status){
+        User user = iUserService.findByUsername(username).get();
+        return iOrder.findAllByStatus(user.getId(),status);
     }
 
     // ham edit Order theo Doi tuong order truyen sang
@@ -38,10 +39,22 @@ public class OrderInPmController {
     public List<OrderDetail> findAllByStatus(@PathVariable long orderId, @RequestParam long userId){
         return iOrderDetail.findAllOrderDetailByOrderId(userId,orderId);
     }
+
     @GetMapping("/listUserInPm/{username}")
     public List<User>  findAllUserBuyInPm(@PathVariable String username){
         User user = iUserService.findByUsername(username).get();
         return iUserService.findAllUserBuyInPm(user.getId());
+    }
+
+    @GetMapping("/listOrderUserInPm/{username}")
+    public List<Orders>  findAllByUserPmAndUserBuyer (@PathVariable String username, @RequestParam long id ){
+        User user = iUserService.findByUsername(username).get();
+        return iOrder.findAllByUserPmAndUserBuyer(user.getId(),id);
+    }
+
+    @GetMapping("/listOrderDetail/{id}")
+    public List<OrderDetail>  findAllOrderById (@PathVariable long id ){
+       return iOrderDetail.findAllOrderById(id);
     }
 
 }
