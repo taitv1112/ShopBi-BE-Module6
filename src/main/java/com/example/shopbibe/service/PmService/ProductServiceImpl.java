@@ -70,6 +70,21 @@ public class ProductServiceImpl implements IProductService{
         return productRepository.findAllByCategory(id);
     }
 
+    @Override
+    public List<Product> findProductByCreateAtNew() {
+        return productRepository.findProductByCreateAtNew();
+    }
+
+    @Override
+    public List<Product> findProductByPmID(Long id) {
+        return productRepository.findProductByPmID(id);
+    }
+
+    @Override
+    public List<Product> findProductByPmIdAndCategoryId(Long idU, Long idC) {
+        return productRepository.findProductByPmIdAndCategoryId(idU,idC);
+    }
+
     public  List<Category> top3Categories(){
             List<Category> top3Cate = new ArrayList<>();
             List<Top3Category> top3CategoryList = productRepository.top3CateByQuantitySale();

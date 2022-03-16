@@ -126,4 +126,16 @@ public class InDexController {
     public ResponseEntity<Rate> getRate(@PathVariable Long id){
         return new ResponseEntity<>(iRateOrderService.findRateByOrdersId(id), HttpStatus.ACCEPTED);
     }
+    @GetMapping("/new10Product")
+    public ResponseEntity<List<Product>> getProductNew(){
+        return new ResponseEntity<>(iProductService.findProductByCreateAtNew(), HttpStatus.ACCEPTED);
+    }
+    @GetMapping("/Top15ProductsalePm/{id}")
+    public ResponseEntity<List<Product>> getTop15ProductsalePm(@PathVariable Long id){
+        return new ResponseEntity<>(iProductService.findProductByPmID(id), HttpStatus.ACCEPTED);
+    }
+    @GetMapping("/findByPmAndCate/{idU}")
+    public ResponseEntity<List<Product>> findByPmAndCate(@PathVariable Long idU,@RequestParam Long idC){
+        return new ResponseEntity<>(iProductService.findProductByPmIdAndCategoryId(idU,idC), HttpStatus.ACCEPTED);
+    }
 }
