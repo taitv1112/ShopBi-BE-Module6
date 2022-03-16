@@ -12,4 +12,9 @@ public interface IOrderImpl {
      Orders findByID(long id);
      List<Orders> findAllOrder(long id);
     List<Orders> searchByEmailUser(  long idPm, String emailFind);
+
+    List<Orders> findAllByUserPmAndUserBuyer(long idPm, long idBuyer);
+
+
+
 }

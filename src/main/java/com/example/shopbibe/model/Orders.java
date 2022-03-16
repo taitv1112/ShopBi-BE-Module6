@@ -31,5 +31,6 @@ public class Orders {
         this.userPm = userPm;
     }
 
-
+    public Orders() {
+    }
 }

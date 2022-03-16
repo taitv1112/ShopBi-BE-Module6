@@ -1,9 +1,7 @@
 package com.example.shopbibe.controller.PmController;
 
-import com.example.shopbibe.model.Category;
-import com.example.shopbibe.model.Img;
-import com.example.shopbibe.model.Product;
-import com.example.shopbibe.model.Promotion;
+import com.example.shopbibe.model.*;
+import com.example.shopbibe.service.IUserService;
 import com.example.shopbibe.service.PmService.ICategoryService;
 import com.example.shopbibe.service.PmService.IImgService;
 import com.example.shopbibe.service.PmService.IProductService;
@@ -30,6 +28,8 @@ public class PmController {
 
     @Autowired
     IImgService imgService;
+    @Autowired
+    IUserService iUserService;
     @GetMapping("/product")
     public ResponseEntity<List<Product>> findAllProduct(){
         return new ResponseEntity<>(productService.findAll(), HttpStatus.OK);
@@ -67,7 +67,11 @@ public class PmController {
     }
 
     @PostMapping
-    public ResponseEntity<Product> save(@RequestBody Product product){
+    public ResponseEntity<Product> save(@RequestBody Product product ,@RequestParam String username){
+        User user = iUserService.findByUsername(username).get();
+        product.setUser(user);
+        product.setPriceSale(product.getPrice()-(product.getPrice()*product.getPromotion().getDiscount())/100);
+        product.setQuantityMax(product.getQuantity());
         return new ResponseEntity<>(productService.save(product),HttpStatus.OK);
     }
 
@@ -77,7 +81,11 @@ public class PmController {
     }
 
     @PutMapping
-    public Product edit(@RequestBody Product product){
+    public Product edit(@RequestBody Product product,@RequestParam String username){
+        User user = iUserService.findByUsername(username).get();
+        product.setUser(user);
+        product.setPriceSale(product.getPrice()-(product.getPrice()*product.getPromotion().getDiscount())/100);
+        product.setQuantityMax(product.getQuantity());
         productService.save(product);
         return product;
     }

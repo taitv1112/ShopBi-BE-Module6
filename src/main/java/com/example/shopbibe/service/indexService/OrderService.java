@@ -29,6 +29,10 @@ public class OrderService implements IOrderImpl{
     }
 
     @Override
+    public List<Orders> findAllByUserPmAndUserBuyer(long idPm, long idBuyer) {
+        return iOrderRepo.findAllByUserPmAndUserBuyer(idPm,idBuyer);
+    }
+    @Override
     public Orders findByID(long id) {
         return iOrderRepo.findById(id).get();
     }
@@ -37,6 +41,7 @@ public class OrderService implements IOrderImpl{
     public List<Orders> findAllOrder(long id) {
         return iOrderRepo.findAllOrder(id);
     }
+
 
     @Override
     public List<Orders> searchByEmailUser(long idPm, String emailFind) {
