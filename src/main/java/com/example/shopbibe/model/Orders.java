@@ -20,7 +20,10 @@ public class Orders {
     @ManyToOne
     private User userPm;
 
-    public Orders( String address_ship, double totalBill, String status, User userBuyer, User userPm) {
+    public Orders() {
+    }
+
+    public Orders(String address_ship, double totalBill, String status, User userBuyer, User userPm) {
         this.address_ship = address_ship;
         this.totalBill = totalBill;
         this.status = status;
