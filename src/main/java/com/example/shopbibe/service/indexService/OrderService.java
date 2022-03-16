@@ -25,7 +25,7 @@ public class OrderService implements IOrderImpl{
 
     @Override
     public List<Orders> findAllByStatus(long id,String status) {
-        return iOrderRepo.findAllOrderByUserIdAndStatus(id,status);
+        return iOrderRepo.findAllOrderByUserIdAndStatuss(id,status);
     }
 
 
