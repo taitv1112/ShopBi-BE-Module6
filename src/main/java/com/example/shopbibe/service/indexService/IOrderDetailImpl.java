@@ -7,4 +7,5 @@ import java.util.List;
 public interface IOrderDetailImpl {
     void save(OrderDetail orderDetail);
     List<OrderDetail> findAllOrderDetailByOrderId( long userId, long orderId);
+    List<OrderDetail> findAllByOrders_Id(Long id);
 }

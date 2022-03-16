@@ -16,7 +16,8 @@ public class Orders {
     private String status;
     @ManyToOne
     private User userBuyer;
-
+    @ManyToOne
+    private Rate rate;
     @ManyToOne
     private User userPm;
 
@@ -28,5 +29,7 @@ public class Orders {
         this.userPm = userPm;
     }
 
+    public Orders() {
 
+    }
 }

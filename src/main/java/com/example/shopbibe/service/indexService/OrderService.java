@@ -27,4 +27,9 @@ public class OrderService implements IOrderImpl{
         return iOrderRepo.findAllOrderByUserIdAndStatus(id,status);
     }
 
+    @Override
+    public List<Orders> findAllByUserBuyer(String username) {
+        return iOrderRepo.findAllByUserBuyer(username);
+    }
+
 }

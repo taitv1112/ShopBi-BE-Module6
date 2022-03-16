@@ -7,5 +7,6 @@ import java.util.List;
 public interface IOrderImpl {
     void save( Orders orders);
     List<Orders> findAllByStatus(long id,String status);
+    List<Orders> findAllByUserBuyer(String username);
 
 }
