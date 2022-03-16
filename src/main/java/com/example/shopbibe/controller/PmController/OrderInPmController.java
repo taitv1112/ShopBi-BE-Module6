@@ -23,11 +23,19 @@ public class OrderInPmController {
     @Autowired
     IUserService iUserService;
     // ham tra ve list order theo userId va status truyen vao
-    @GetMapping("/listOrder/{username}")
+
+    @GetMapping("/listOrderByStatus/{username}")
     public List<Orders> findAllByStatus(@PathVariable String username,@RequestParam(defaultValue = "Pending") String status){
         User user = iUserService.findByUsername(username).get();
         return iOrder.findAllByStatus(user.getId(),status);
     }
+
+    @GetMapping("/listOrder/{username}")
+    public List<Orders> findAllOrderById(@PathVariable String username){
+        User user = iUserService.findByUsername(username).get();
+        return iOrder.findAllOrder(user.getId());
+    }
+
 
     // ham edit Order theo Doi tuong order truyen sang
     @PutMapping
@@ -44,6 +52,25 @@ public class OrderInPmController {
     public List<User>  findAllUserBuyInPm(@PathVariable String username){
         User user = iUserService.findByUsername(username).get();
         return iUserService.findAllUserBuyInPm(user.getId());
+    }
+    @GetMapping("/checkkedOrder/{idOrder}")
+    public  Orders checkkedOrder(@PathVariable long idOrder){
+        Orders orders = iOrder.findByID(idOrder);
+        orders.setStatus("Paid");
+        iOrder.save(orders);
+             return orders;
+    }
+    @GetMapping("/unCheckkedOrder/{idOrder}")
+    public  Orders unCheckkedOrder(@PathVariable long idOrder){
+        Orders orders = iOrder.findByID(idOrder);
+        orders.setStatus("Pending");
+        iOrder.save(orders);
+             return orders;
+    }
+    @GetMapping("/searchByEmail/{username}")
+    public List<Orders>  searchByEmail(@PathVariable String username,@RequestParam(defaultValue = "") String emailFind){
+        User user = iUserService.findByUsername(username).get();
+        return iOrder.searchByEmailUser(user.getId(),emailFind);
     }
 
     @GetMapping("/findUserInPm/{username}")
