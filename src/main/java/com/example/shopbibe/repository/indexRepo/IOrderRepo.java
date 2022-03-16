@@ -30,4 +30,7 @@ public interface IOrderRepo extends JpaRepository<Orders,Long> {
 
 
 
+
+    @Query(value = "select o from Orders o where o.userBuyer.username = :username order by o.id desc")
+    List<Orders> findAllByUserBuyer(@Param("username") String username);
 }

@@ -50,4 +50,9 @@ public class OrderService implements IOrderImpl{
     }
 
 
+    @Override
+    public List<Orders> findAllByUserBuyer(String username) {
+        return iOrderRepo.findAllByUserBuyer(username);
+    }
+
 }

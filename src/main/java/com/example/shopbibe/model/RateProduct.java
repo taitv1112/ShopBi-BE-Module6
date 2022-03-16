@@ -16,4 +16,20 @@ public class RateProduct {
     private Product product;
     @OneToOne
     private Rate rate;
+
+    public RateProduct(Orders orders, Product product, Rate rate) {
+        this.orders = orders;
+        this.product = product;
+        this.rate = rate;
+    }
+
+    public RateProduct() {
+    }
+
+    public RateProduct(Long id, Orders orders, Product product, Rate rate) {
+        this.id = id;
+        this.orders = orders;
+        this.product = product;
+        this.rate = rate;
+    }
 }

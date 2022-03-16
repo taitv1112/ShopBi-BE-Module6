@@ -10,4 +10,5 @@ public interface IOrderDetailImpl {
     List<OrderDetail> findAllOrderDetailByOrderId( long userId, long orderId);
 
     List<OrderDetail> findAllOrderById(long id);
+    List<OrderDetail> findAllByOrders_Id(Long id);
 }

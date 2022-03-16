@@ -14,4 +14,9 @@ public interface IOrderDetailRepo extends JpaRepository<OrderDetail,Long> {
 
     @Query(nativeQuery = true,value = "SELECT * FROM shopbi.order_detail where orders_id =:id")
     List<OrderDetail> findAllOrderById(@Param("id") long id);
+    @Query(nativeQuery = true,value = "SELECT shopbi.order_detail.* FROM shopbi.order_detail join shopbi.orders on orders_id = order_detail.orders_id  join users on orders.user_buyer_id = users.id where users.username = :username")
+    List<OrderDetail> findAllByUsername(@Param("username") String username);
+
+    List<OrderDetail> findAllByOrders_Id(Long id);
+
 }
