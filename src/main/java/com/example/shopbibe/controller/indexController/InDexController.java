@@ -15,6 +15,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -92,13 +94,14 @@ public class InDexController {
         //String address_ship, double totalBill, String status, User userBuyer, User userPm
         User userBuyer = iUserService.findByUsername(orderForm.getUsernameBuyer()).get();
         User userPm = iUserService.findByUsername(orderForm.getUsernameSaler()).get();
-       Orders order = new Orders(orderForm.getAddress_ship(),orderForm.getBillTotal(),"Pending",userBuyer,userPm);
+       Orders order = new Orders(orderForm.getAddress_ship(),orderForm.getBillTotal(),"Pending",userBuyer,userPm,new Date());
        iOrder.save(order);
         for (CartDetail cartDetail: orderForm.getCartDetails()) {
             iOrderDetail.save(new OrderDetail(order,cartDetail.getProduct(),cartDetail.getQuantity()));
                 Product product = cartDetail.getProduct();
             if(product.getQuantity() >=cartDetail.getQuantity() ){
                 product.setQuantity(product.getQuantity() - cartDetail.getQuantity());
+                product.setQuantitySale(product.getQuantitySale()+cartDetail.getQuantity());
                 product.setQuantityMax(product.getQuantity());
                 iProductService.save(product);
             }
@@ -114,6 +117,7 @@ public class InDexController {
     public  ResponseEntity<?> addToCart(@RequestBody RateProduct rateProduct){
         Orders orders = rateProduct.getOrders();
         orders.setRate(rateProduct.getRate());
+
         iOrder.save(orders);
         iRateOrderService.saveRateOrder(rateProduct);
         return new ResponseEntity<>(rateProduct,HttpStatus.ACCEPTED);

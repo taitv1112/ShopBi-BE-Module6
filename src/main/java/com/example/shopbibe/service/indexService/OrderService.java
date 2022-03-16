@@ -8,6 +8,7 @@ import com.example.shopbibe.repository.indexRepo.IOrderRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -20,7 +21,8 @@ public class OrderService implements IOrderImpl{
     IProductRepository iProductRepository;
     @Override
     public void save(Orders orders) {
-         iOrderRepo.save(orders);
+        orders.setModifyAt(new Date());
+        iOrderRepo.save(orders);
     }
 
     @Override
@@ -45,7 +47,6 @@ public class OrderService implements IOrderImpl{
 
     @Override
     public List<Orders> searchByEmailUser(long idPm, String emailFind) {
-
         return iOrderRepo.searchByEmailUser(idPm,emailFind);
     }
 
@@ -53,6 +54,11 @@ public class OrderService implements IOrderImpl{
     @Override
     public List<Orders> findAllByUserBuyer(String username) {
         return iOrderRepo.findAllByUserBuyer(username);
+    }
+
+    @Override
+    public double avgRateUser(Long id) {
+        return iOrderRepo.avgRateUser(id);
     }
 
 }

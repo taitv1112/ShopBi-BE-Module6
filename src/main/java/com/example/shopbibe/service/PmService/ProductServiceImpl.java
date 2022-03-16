@@ -11,6 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 @Service
 public class ProductServiceImpl implements IProductService{
@@ -25,6 +26,7 @@ public class ProductServiceImpl implements IProductService{
 
     @Override
     public Product save(Product product) {
+        product.setModifyAt(new Date());
         return productRepository.save(product);
     }
 
