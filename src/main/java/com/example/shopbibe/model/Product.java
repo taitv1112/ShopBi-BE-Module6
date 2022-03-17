@@ -3,6 +3,7 @@ package com.example.shopbibe.model;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Data
 @Entity
@@ -20,6 +21,8 @@ public class Product {
     private double priceSale;// gia sau khuyen mai
     private String coverPhoto;
     private long status ;
+    private Date createAt;
+    private Date modifyAt;
     @ManyToOne
     private Category category;
     @ManyToOne

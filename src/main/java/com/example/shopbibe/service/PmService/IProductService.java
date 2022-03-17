@@ -25,5 +25,8 @@ public interface IProductService {
 
     List<Product> findAllByName(String name);
     List<Product> findAllByCategory(Long id);
+    List<Product> findProductByCreateAtNew();
+    List<Product> findProductByPmID( Long id);
+    List<Product> findProductByPmIdAndCategoryId( Long idU , Long idC );
 
 }

@@ -67,10 +67,25 @@ public class OrderInPmController {
         iOrder.save(orders);
              return orders;
     }
+    @GetMapping("/checkDone/{idOrder}")
+    public  Orders checkDone(@PathVariable long idOrder){
+        Orders orders = iOrder.findByID(idOrder);
+        orders.setStatus("Done");
+        iOrder.save(orders);
+        return orders;
+    }
+
     @GetMapping("/searchByEmail/{username}")
     public List<Orders>  searchByEmail(@PathVariable String username,@RequestParam(defaultValue = "") String emailFind){
         User user = iUserService.findByUsername(username).get();
         return iOrder.searchByEmailUser(user.getId(),emailFind);
+    }
+
+    @GetMapping("/findUserInPm/{username}")
+    public List<User>  findAllUserBuyEmailInPm(@PathVariable String username, @RequestParam String email){
+        User user = iUserService.findByUsername(username).get();
+        return iUserService.findAllUserBuyInPmAndEmail(user.getId(), email);
+
     }
 
     @GetMapping("/listOrderUserInPm/{username}")
@@ -83,6 +98,11 @@ public class OrderInPmController {
     public List<OrderDetail>  findAllOrderById (@PathVariable long id ){
        return iOrderDetail.findAllOrderById(id);
     }
+    @GetMapping("/detailOrderInPm/{orderId}")
+    public List<OrderDetail> orderDetailListInPm(@PathVariable long orderId){
+        return iOrderDetail.listOrderDetail(orderId);
+    }
+
 
 }
 

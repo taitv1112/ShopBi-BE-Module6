@@ -21,4 +21,6 @@ public interface IUserService {
     List<User> findAllByEmailContaining(String email);
 
     List<User> findAllUserBuyInPm(long id);
+
+    List<User> findAllUserBuyInPmAndEmail(long id, String email);
 }

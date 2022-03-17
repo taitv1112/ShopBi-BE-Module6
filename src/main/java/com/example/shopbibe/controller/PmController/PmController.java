@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -69,6 +70,7 @@ public class PmController {
     @PostMapping
     public ResponseEntity<Product> save(@RequestBody Product product ,@RequestParam String username){
         User user = iUserService.findByUsername(username).get();
+        product.setCreateAt(new Date());
         product.setUser(user);
         product.setPriceSale(product.getPrice()-(product.getPrice()*product.getPromotion().getDiscount())/100);
         product.setQuantityMax(product.getQuantity());

@@ -55,4 +55,9 @@ public class UserServiceImpl implements IUserService {
         return userRepository.findAllUserBuyInPm(id);
     }
 
+    @Override
+    public List<User> findAllUserBuyInPmAndEmail(long id, String email) {
+        return userRepository.findAllUserBuyInPmAndEmail(id,email);
+    }
+
 }

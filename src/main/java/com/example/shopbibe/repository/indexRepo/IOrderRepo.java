@@ -27,7 +27,12 @@ public interface IOrderRepo extends JpaRepository<Orders,Long> {
     @Query(nativeQuery = true,value = "SELECT * FROM shopbi.order_detail where orders_id =:id")
     List<Orders> findAllOrderById(@Param("id") long id);
 
+    @Query(nativeQuery = true,value = "SELECT avg(rate_id) FROM shopbi.orders where user_pm_id = :id ")
+    double avgRateUser(@Param("id") Long id);
 
 
 
+
+    @Query(value = "select o from Orders o where o.userBuyer.username = :username order by o.id desc")
+    List<Orders> findAllByUserBuyer(@Param("username") String username);
 }

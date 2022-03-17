@@ -9,5 +9,6 @@ public interface IOrderDetailImpl {
     void save(OrderDetail orderDetail);
     List<OrderDetail> findAllOrderDetailByOrderId( long userId, long orderId);
     List<OrderDetail> findAllOrderById(long id);
-
+    List<OrderDetail> findAllByOrders_Id(Long id);
+    List<OrderDetail> listOrderDetail( long idOrder);
 }

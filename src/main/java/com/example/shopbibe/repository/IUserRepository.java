@@ -24,4 +24,9 @@ public interface IUserRepository extends JpaRepository<User, Long> {
 
     @Query(nativeQuery = true,value = "SELECT * FROM shopbi.users where users.id in( SELECT user_buyer_id FROM shopbi.orders where user_pm_id =:id group by user_buyer_id)")
     List<User> findAllUserBuyInPm(@Param("id") long id);
+
+    @Query(nativeQuery = true,value = "SELECT * FROM shopbi.users where id in (SELECT user_buyer_id FROM shopbi.orders where user_pm_id =:id and email like concat('%',:email,'%') group by user_buyer_id)")
+    List<User> findAllUserBuyInPmAndEmail(@Param("id") long id,@Param("email")String email);
+
+
 }

@@ -6,10 +6,7 @@ import com.example.shopbibe.model.*;
 import com.example.shopbibe.service.IUserService;
 import com.example.shopbibe.service.PmService.ICategoryService;
 import com.example.shopbibe.service.PmService.IProductService;
-import com.example.shopbibe.service.indexService.ICartDetailtService;
-import com.example.shopbibe.service.indexService.ICartService;
-import com.example.shopbibe.service.indexService.IOrderDetailImpl;
-import com.example.shopbibe.service.indexService.IOrderImpl;
+import com.example.shopbibe.service.indexService.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -18,12 +15,16 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Date;
 import java.util.List;
 
 @RestController
 @CrossOrigin("*")
 @RequestMapping("/index")
 public class InDexController {
+    @Autowired
+    IRateOrderService iRateOrderService;
     @Autowired
     IUserService iUserService;
     @Autowired
@@ -77,6 +78,15 @@ public class InDexController {
     public ResponseEntity<List<CartDetail>> getListCartDetailByCartId(@PathVariable Long idCart){
         return new ResponseEntity<>(iCartDetailtService.findCartDetailsByCart_Id(idCart),HttpStatus.ACCEPTED);
     }
+
+    @GetMapping("/findOrder/{username}")
+    public ResponseEntity<List<Orders>> getListOrderBuyer(@PathVariable String username){
+        return new ResponseEntity<>(iOrder.findAllByUserBuyer(username), HttpStatus.ACCEPTED);
+    }
+    @GetMapping("/findOrderDetail/{id}")
+    public ResponseEntity<List<OrderDetail>> getListOrderDetailByOrderId(@PathVariable Long id){
+        return new ResponseEntity<>(iOrderDetail.findAllByOrders_Id(id), HttpStatus.ACCEPTED);
+    }
     // lưu Order theo OrderPMs truyền vào ,Check out don hang
     @Transactional
     @PostMapping("/checkOutOrder")
@@ -84,13 +94,14 @@ public class InDexController {
         //String address_ship, double totalBill, String status, User userBuyer, User userPm
         User userBuyer = iUserService.findByUsername(orderForm.getUsernameBuyer()).get();
         User userPm = iUserService.findByUsername(orderForm.getUsernameSaler()).get();
-       Orders order = new Orders(orderForm.getAddress_ship(),orderForm.getBillTotal(),"Pending",userBuyer,userPm);
+       Orders order = new Orders(orderForm.getAddress_ship(),orderForm.getBillTotal(),"Pending",userBuyer,userPm,new Date());
        iOrder.save(order);
         for (CartDetail cartDetail: orderForm.getCartDetails()) {
             iOrderDetail.save(new OrderDetail(order,cartDetail.getProduct(),cartDetail.getQuantity()));
                 Product product = cartDetail.getProduct();
             if(product.getQuantity() >=cartDetail.getQuantity() ){
                 product.setQuantity(product.getQuantity() - cartDetail.getQuantity());
+                product.setQuantitySale(product.getQuantitySale()+cartDetail.getQuantity());
                 product.setQuantityMax(product.getQuantity());
                 iProductService.save(product);
             }
@@ -101,5 +112,30 @@ public class InDexController {
     @PostMapping("/addToCart")
     public  void addToCart(@RequestBody CartForm cartForm){
        iCart.saveCart(cartForm);
+    }
+    @PostMapping("/RateOrder")
+    public  ResponseEntity<?> addToCart(@RequestBody RateProduct rateProduct){
+        Orders orders = rateProduct.getOrders();
+        orders.setRate(rateProduct.getRate());
+
+        iOrder.save(orders);
+        iRateOrderService.saveRateOrder(rateProduct);
+        return new ResponseEntity<>(rateProduct,HttpStatus.ACCEPTED);
+    }
+    @GetMapping("/findRateProduct/{id}")
+    public ResponseEntity<Rate> getRate(@PathVariable Long id){
+        return new ResponseEntity<>(iRateOrderService.findRateByOrdersId(id), HttpStatus.ACCEPTED);
+    }
+    @GetMapping("/new10Product")
+    public ResponseEntity<List<Product>> getProductNew(){
+        return new ResponseEntity<>(iProductService.findProductByCreateAtNew(), HttpStatus.ACCEPTED);
+    }
+    @GetMapping("/Top15ProductsalePm/{id}")
+    public ResponseEntity<List<Product>> getTop15ProductsalePm(@PathVariable Long id){
+        return new ResponseEntity<>(iProductService.findProductByPmID(id), HttpStatus.ACCEPTED);
+    }
+    @GetMapping("/findByPmAndCate/{idU}")
+    public ResponseEntity<List<Product>> findByPmAndCate(@PathVariable Long idU,@RequestParam Long idC){
+        return new ResponseEntity<>(iProductService.findProductByPmIdAndCategoryId(idU,idC), HttpStatus.ACCEPTED);
     }
 }
