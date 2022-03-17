@@ -27,5 +27,4 @@ public class OrderDetailService implements IOrderDetailImpl{
         return iOrderDetailRepo.findAllOrderById(id);
     }
 
-
 }
