@@ -6,6 +6,7 @@ import com.example.shopbibe.service.PmService.ICategoryService;
 import com.example.shopbibe.service.PmService.IImgService;
 import com.example.shopbibe.service.PmService.IProductService;
 import com.example.shopbibe.service.PmService.IPromotionService;
+import com.example.shopbibe.service.indexService.IOrderImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,6 +32,9 @@ public class PmController {
     IImgService imgService;
     @Autowired
     IUserService iUserService;
+
+    @Autowired
+    IOrderImpl iOrder;
     @GetMapping("/product")
     public ResponseEntity<List<Product>> findAllProduct(){
         return new ResponseEntity<>(productService.findAll(), HttpStatus.OK);
@@ -65,6 +69,18 @@ public class PmController {
     @GetMapping("/find/category/{id}")
     public ResponseEntity<List<Product>> findAllByCategory(@PathVariable Long id){
         return new ResponseEntity<>(productService.findAllByCategory(id),HttpStatus.OK);
+    }
+
+    @GetMapping("/listOrderDoneToday/{username}")
+    public ResponseEntity<List<Orders>> findOrderByIdAndStatusToday(@PathVariable String username){
+        User user = iUserService.findByUsername(username).get();
+        return new ResponseEntity<>(iOrder.findOrdersByIdAndStatusToday(user.getId()),HttpStatus.OK);
+    }
+
+    @GetMapping("/listOrderDone/{username}")
+    public ResponseEntity<List<Orders>> findOrderByIdAndStatus(@PathVariable String username){
+        User user = iUserService.findByUsername(username).get();
+        return new ResponseEntity<>(iOrder.findOrdersByIdAndStatus(user.getId()),HttpStatus.OK);
     }
 
     @PostMapping

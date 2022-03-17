@@ -19,4 +19,8 @@ public interface IOrderImpl {
     List<Orders> findAllByUserBuyer(String username);
     double avgRateUser( Long id);
 
+    List<Orders> findOrdersByIdAndStatus(Long id);
+
+    List<Orders> findOrdersByIdAndStatusToday( Long id);
+
 }
