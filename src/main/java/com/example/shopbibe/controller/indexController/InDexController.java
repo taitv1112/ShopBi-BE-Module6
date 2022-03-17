@@ -109,6 +109,10 @@ public class InDexController {
                 iProductService.save(product);
             }
         }
+        List<CartDetail> cartDetails = iCartDetailtService.findCartDetailsByCart_Id(userBuyer.getCart().getId());
+        for (CartDetail cartDetail: cartDetails) {
+            iCartDetailtService.delete(cartDetail.getId());
+        }
         return new ResponseEntity<>(orderForm,HttpStatus.ACCEPTED);
     }
     // Luu Cart theo CartForm truyền vào
@@ -163,5 +167,18 @@ public class InDexController {
             user.setPassword(user1.getPassword());
         }
     return new ResponseEntity<>(iUserService.save(user),HttpStatus.ACCEPTED);
+    }
+    @PostMapping("/saveCartDetail")
+    public  ResponseEntity<?> saveCartDetail(@RequestBody CartDetail cartDetail){
+        iCartDetailtService.saveCartDetail(cartDetail);
+        return new ResponseEntity<>("Successful Request",HttpStatus.ACCEPTED);
+    }
+    @DeleteMapping("/deleteCartDetail/{idCart}")
+    public  ResponseEntity<?> deleteCartDetail(@PathVariable Long idCart){
+        List<CartDetail> cartDetails = iCartDetailtService.findCartDetailsByCart_Id(idCart);
+        for (CartDetail cartDetail: cartDetails) {
+            iCartDetailtService.delete(cartDetail.getId());
+        }
+        return new ResponseEntity<>("Successful Request",HttpStatus.ACCEPTED);
     }
 }

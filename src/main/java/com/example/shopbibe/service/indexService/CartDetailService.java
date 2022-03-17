@@ -21,4 +21,9 @@ public class CartDetailService implements ICartDetailtService{
     public void saveCartDetail(CartDetail cartDetail) {
         iCartDetailRepo.save(cartDetail);
     }
+
+    @Override
+    public void delete(Long id) {
+        iCartDetailRepo.deleteById(id);
+    }
 }
