@@ -7,6 +7,7 @@ import com.example.shopbibe.service.IUserService;
 import com.example.shopbibe.service.PmService.ICategoryService;
 import com.example.shopbibe.service.PmService.IProductService;
 import com.example.shopbibe.service.indexService.*;
+import com.example.shopbibe.service.indexService.email.RegistrationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -39,6 +40,8 @@ public class InDexController {
     IOrderImpl iOrder;
     @Autowired
     ICartService iCart;
+    @Autowired
+    RegistrationService registrationService;
     // ham tra list sp theo categoryid truyen sang,sap xep theo quantitysale da phan trang
     @GetMapping("/category/{idCate}")
     public ResponseEntity<Page<Product>> findAllByCategory(@PathVariable long idCate,@RequestParam(defaultValue = "0") int pageNumber){
@@ -80,8 +83,8 @@ public class InDexController {
     }
 
     @GetMapping("/findOrder/{username}")
-    public ResponseEntity<List<Orders>> getListOrderBuyer(@PathVariable String username){
-        return new ResponseEntity<>(iOrder.findAllByUserBuyer(username), HttpStatus.ACCEPTED);
+    public ResponseEntity<Page<Orders>> getListOrderBuyer(@PathVariable String username,@RequestParam(defaultValue = "0") int pageNumber){
+        return new ResponseEntity<>(iOrder.findAllByUserBuyer(username,PageRequest.of(pageNumber,5)), HttpStatus.ACCEPTED);
     }
     @GetMapping("/findOrderDetail/{id}")
     public ResponseEntity<List<OrderDetail>> getListOrderDetailByOrderId(@PathVariable Long id){
@@ -137,5 +140,28 @@ public class InDexController {
     @GetMapping("/findByPmAndCate/{idU}")
     public ResponseEntity<List<Product>> findByPmAndCate(@PathVariable Long idU,@RequestParam Long idC){
         return new ResponseEntity<>(iProductService.findProductByPmIdAndCategoryId(idU,idC), HttpStatus.ACCEPTED);
+    }
+    @GetMapping("/findUserByUserName/{username}")
+    public ResponseEntity<User> findUserByUserName(@PathVariable String username){
+        return new ResponseEntity<>(iUserService.findByUsername(username).get(), HttpStatus.ACCEPTED);
+    }
+
+    @GetMapping("/avgPmRate/{id}")
+    public ResponseEntity<?> findAvgPmRate(@PathVariable Long id){
+        return new ResponseEntity<>(iRateOrderService.avgByPmRate(id), HttpStatus.ACCEPTED);
+    }
+    @PostMapping("/sendRequestUpSaller")
+    public  ResponseEntity<?> sendRequestUpSaller(@RequestBody User user){
+        registrationService.sendMailComfimPmForAdmin(user.getId(),user.getEmail());
+        registrationService.sendMailComfimPmForUser(user.getId(),user.getEmail());
+        return new ResponseEntity<>("Successful Request",HttpStatus.ACCEPTED);
+    }
+    @PutMapping("/userEdit")
+    public  ResponseEntity<?> updateUser(@RequestBody User user){
+        User user1 = iUserService.findUserByID(user.getId());
+        if (user.getPassword() == null){
+            user.setPassword(user1.getPassword());
+        }
+    return new ResponseEntity<>(iUserService.save(user),HttpStatus.ACCEPTED);
     }
 }

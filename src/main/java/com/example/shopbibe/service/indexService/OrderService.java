@@ -6,6 +6,8 @@ import com.example.shopbibe.repository.PmRepo.IProductRepository;
 import com.example.shopbibe.repository.indexRepo.IOrderDetailRepo;
 import com.example.shopbibe.repository.indexRepo.IOrderRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -52,8 +54,8 @@ public class OrderService implements IOrderImpl{
 
 
     @Override
-    public List<Orders> findAllByUserBuyer(String username) {
-        return iOrderRepo.findAllByUserBuyer(username);
+    public Page<Orders> findAllByUserBuyer(String username, Pageable pageable) {
+        return iOrderRepo.findAllByUserBuyer(username,pageable);
     }
 
     @Override

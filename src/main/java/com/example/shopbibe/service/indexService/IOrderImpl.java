@@ -2,6 +2,8 @@ package com.example.shopbibe.service.indexService;
 
 import com.example.shopbibe.model.Orders;
 import com.example.shopbibe.model.User;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
@@ -16,7 +18,7 @@ public interface IOrderImpl {
     List<Orders> findAllByUserPmAndUserBuyer(long idPm, long idBuyer);
 
 
-    List<Orders> findAllByUserBuyer(String username);
+    Page<Orders> findAllByUserBuyer(String username, Pageable pageable);
     double avgRateUser( Long id);
 
 }

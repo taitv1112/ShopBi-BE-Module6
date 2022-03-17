@@ -2,7 +2,10 @@ package com.example.shopbibe.repository.indexRepo;
 
 import com.example.shopbibe.model.Orders;
 
+import com.example.shopbibe.model.Product;
 import com.example.shopbibe.model.User;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -34,5 +37,5 @@ public interface IOrderRepo extends JpaRepository<Orders,Long> {
 
 
     @Query(value = "select o from Orders o where o.userBuyer.username = :username order by o.id desc")
-    List<Orders> findAllByUserBuyer(@Param("username") String username);
+    Page<Orders> findAllByUserBuyer(@Param("username") String username, Pageable pageable);
 }

@@ -76,6 +76,15 @@ public class User {
         this.cart = cart;
     }
 
+    public User(Long id, String name, String username, String email,  String avatar, String phone, String address, String nameStore, double rateNumber, Cart cart, Set<Role> roles) {
+        this.id = id;
+        this.name = name;
+        this.avatar = avatar;
+        this.address = address;
+        this.nameStore = nameStore;
+
+    }
+
     public Set<Role> getRoles() {
         return roles;
     }

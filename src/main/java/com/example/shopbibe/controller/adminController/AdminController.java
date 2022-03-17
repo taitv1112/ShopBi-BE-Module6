@@ -4,6 +4,7 @@ import com.example.shopbibe.model.Role;
 import com.example.shopbibe.model.RoleName;
 import com.example.shopbibe.model.User;
 import com.example.shopbibe.service.IUserService;
+import com.example.shopbibe.service.indexService.email.RegistrationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -19,6 +20,8 @@ import java.util.Set;
 @CrossOrigin("*")
 @RequestMapping("/admin")
 public class AdminController {
+    @Autowired
+    RegistrationService registrationService;
     @Autowired
     IUserService iUserService;
     @GetMapping("/listUser")
@@ -36,6 +39,7 @@ public class AdminController {
         Set<Role> roleSet = user.getRoles();
         roleSet.add(new Role(2L,RoleName.PM));
         user.setRoles(roleSet);
+        registrationService.sendMailOKUser(user);
         iUserService.save(user);
     }
     @GetMapping("/downToUser/{id}")
@@ -43,6 +47,7 @@ public class AdminController {
         User  user = iUserService.findUserByID(id);
         Set<Role> roleSet = new HashSet<>();
         roleSet.add(new Role(1L,RoleName.USER));
+        registrationService.disablePmForUser(user);
         user.setRoles(roleSet);
         iUserService.save(user);
     }
