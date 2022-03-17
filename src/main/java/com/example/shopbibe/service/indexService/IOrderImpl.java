@@ -21,4 +21,8 @@ public interface IOrderImpl {
     Page<Orders> findAllByUserBuyer(String username, Pageable pageable);
     double avgRateUser( Long id);
 
+    List<Orders> findOrdersByIdAndStatus(Long id);
+
+    List<Orders> findOrdersByIdAndStatusToday( Long id);
+
 }

@@ -32,5 +32,10 @@ public class OrderDetailService implements IOrderDetailImpl{
         return iOrderDetailRepo.findAllByOrders_Id(id);
     }
 
+    @Override
+    public List<OrderDetail> listOrderDetail(long idOrder) {
+        return iOrderDetailRepo.listOrderDetail(idOrder);
+    }
+
 
 }

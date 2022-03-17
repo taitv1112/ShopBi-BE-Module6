@@ -10,6 +10,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.Date;
 import java.util.List;
 
 public interface IOrderRepo extends JpaRepository<Orders,Long> {
@@ -32,6 +33,12 @@ public interface IOrderRepo extends JpaRepository<Orders,Long> {
 
     @Query(nativeQuery = true,value = "SELECT avg(rate_id) FROM shopbi.orders where user_pm_id = :id ")
     double avgRateUser(@Param("id") Long id);
+
+    @Query(nativeQuery = true,value = "SELECT * FROM shopbi.orders where user_pm_id = :id and status = 'done' and create_at > :createAt ")
+    List<Orders> findOrdersByIdAndStatusToday(@Param("id") Long id, @Param("createAt") String createAt);
+
+    @Query(nativeQuery = true,value = "SELECT * FROM shopbi.orders where user_pm_id = :id and status = 'done' ")
+    List<Orders> findOrdersByIdAndStatus(@Param("id") Long id);
 
 
 
