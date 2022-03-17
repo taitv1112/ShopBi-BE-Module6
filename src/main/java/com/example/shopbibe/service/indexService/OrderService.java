@@ -8,6 +8,10 @@ import com.example.shopbibe.repository.indexRepo.IOrderRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 
@@ -59,6 +63,17 @@ public class OrderService implements IOrderImpl{
     @Override
     public double avgRateUser(Long id) {
         return iOrderRepo.avgRateUser(id);
+    }
+
+    @Override
+    public List<Orders> findOrdersByIdAndStatus(Long id) {
+        return iOrderRepo.findOrdersByIdAndStatus(id);
+    }
+
+    @Override
+    public List<Orders> findOrdersByIdAndStatusToday(Long id) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+        return iOrderRepo.findOrdersByIdAndStatusToday(id,LocalDate.now().format(formatter));
     }
 
 }
