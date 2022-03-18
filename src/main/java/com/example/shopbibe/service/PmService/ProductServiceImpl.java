@@ -36,6 +36,11 @@ public class ProductServiceImpl implements IProductService{
     }
 
     @Override
+    public List<Product> findAllByUserName(String username) {
+        return productRepository.findAllByUserName(username);
+    }
+
+    @Override
     public Product findById(long id) {
         return productRepository.findById(id).get();
     }

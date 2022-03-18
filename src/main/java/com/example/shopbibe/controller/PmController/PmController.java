@@ -35,9 +35,9 @@ public class PmController {
 
     @Autowired
     IOrderImpl iOrder;
-    @GetMapping("/product")
-    public ResponseEntity<List<Product>> findAllProduct(){
-        return new ResponseEntity<>(productService.findAll(), HttpStatus.OK);
+    @GetMapping("/product/{username}")
+    public ResponseEntity<List<Product>> findAllProduct(@PathVariable String username){
+        return new ResponseEntity<>(productService.findAllByUserName(username), HttpStatus.OK);
     }
 
     @GetMapping("/category")

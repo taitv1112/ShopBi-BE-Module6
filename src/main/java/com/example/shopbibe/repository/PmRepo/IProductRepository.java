@@ -18,6 +18,8 @@ public interface IProductRepository extends JpaRepository<Product, Long> {
    Page<Product> findAllByUserId(Pageable pageable,long idUser);
    Page<Product> findAll(Pageable pageable);
    Page<Product> findAllByNameContaining(Pageable pageable,String nameFind);
+   @Query(value = "select p from Product p where p.user.username = :username")
+   List<Product> findAllByUserName(@Param("username") String username );
 
    @Query(nativeQuery = true, value = "SELECT * FROM shopbi.product where name like concat('%',:name,'%')")
    List<Product> findAllByName(@Param("name") String name);

@@ -15,7 +15,7 @@ public interface IProductService {
     Product save(Product product);
 
     void delete(long id);
-
+    List<Product> findAllByUserName(String username);
     Product findById(long id);
     Page<Product> findAllByCategory(Pageable pageable,long idCate);
     Page<Product> findAllByUser(Pageable pageable,long idPm);
