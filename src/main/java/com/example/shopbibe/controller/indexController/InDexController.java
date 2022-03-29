@@ -6,6 +6,7 @@ import com.example.shopbibe.model.*;
 import com.example.shopbibe.service.IUserService;
 import com.example.shopbibe.service.PmService.ICategoryService;
 import com.example.shopbibe.service.PmService.IProductService;
+import com.example.shopbibe.service.PmService.PromotionServiceImpl;
 import com.example.shopbibe.service.indexService.*;
 import com.example.shopbibe.service.indexService.email.RegistrationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+
+
 
 import java.util.Date;
 import java.util.List;
@@ -42,6 +45,8 @@ public class InDexController {
     ICartService iCart;
     @Autowired
     RegistrationService registrationService;
+    @Autowired
+    PromotionServiceImpl iPromotionService;
     // ham tra list sp theo categoryid truyen sang,sap xep theo quantitysale da phan trang
     @GetMapping("/category/{idCate}")
     public ResponseEntity<Page<Product>> findAllByCategory(@PathVariable long idCate,@RequestParam(defaultValue = "0") int pageNumber){
@@ -156,8 +161,21 @@ public class InDexController {
     }
     @PostMapping("/sendRequestUpSaller")
     public  ResponseEntity<?> sendRequestUpSaller(@RequestBody User user){
-        registrationService.sendMailComfimPmForAdmin(user.getId(),user.getEmail());
-        registrationService.sendMailComfimPmForUser(user.getId(),user.getEmail());
+        Thread thread = new Thread(){
+            public void run(){
+                registrationService.sendMailComfimPmForAdmin(user.getId(),user.getEmail());
+            }
+        };
+        thread.start();
+        Thread thread1 = new Thread(){
+            public void run(){
+                registrationService.sendMailComfimPmForUser(user.getId(),user.getEmail());
+            }
+        };
+        thread.start();
+        thread1.start();
+
+
         return new ResponseEntity<>("Successful Request",HttpStatus.ACCEPTED);
     }
     @PutMapping("/userEdit")
@@ -171,14 +189,25 @@ public class InDexController {
     @PostMapping("/saveCartDetail")
     public  ResponseEntity<?> saveCartDetail(@RequestBody CartDetail cartDetail){
         iCartDetailtService.saveCartDetail(cartDetail);
-        return new ResponseEntity<>("Successful Request",HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
-    @DeleteMapping("/deleteCartDetail/{idCart}")
+    @GetMapping("/deleteCartDetail/{idCart}")
     public  ResponseEntity<?> deleteCartDetail(@PathVariable Long idCart){
         List<CartDetail> cartDetails = iCartDetailtService.findCartDetailsByCart_Id(idCart);
-        for (CartDetail cartDetail: cartDetails) {
-            iCartDetailtService.delete(cartDetail.getId());
+        if(cartDetails.size() >0 ){
+            for (CartDetail cartDetail: cartDetails) {
+                iCartDetailtService.delete(cartDetail.getId());
+            }
+            return new ResponseEntity<>(HttpStatus.ACCEPTED);
+        }else {
+            return new ResponseEntity<>(HttpStatus.ACCEPTED);
         }
-        return new ResponseEntity<>("Successful Request",HttpStatus.ACCEPTED);
+
+
+    }
+    @GetMapping("/findPromotion/{name}")
+    public ResponseEntity<Promotion> findPromotion(@PathVariable String name){
+
+        return new ResponseEntity<>(iPromotionService.findByName(name), HttpStatus.ACCEPTED);
     }
 }

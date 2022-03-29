@@ -29,4 +29,8 @@ public class PromotionServiceImpl implements IPromotionService{
     public Promotion findById(long id) {
         return promotionRepository.findById(id).get();
     }
+    @Override
+    public Promotion findByName(String name) {
+        return promotionRepository.findByName(name);
+    }
 }

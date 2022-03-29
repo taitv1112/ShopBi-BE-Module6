@@ -1,6 +1,7 @@
 package com.example.shopbibe.config;
 
 
+import com.example.shopbibe.model.RoleName;
 import com.example.shopbibe.security.jwt.JwtEntryPoint;
 import com.example.shopbibe.security.jwt.JwtTokenFilter;
 import com.example.shopbibe.security.userprincal.UserDetailServices;
@@ -46,8 +47,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
-        httpSecurity.cors().and().csrf().disable().
-                authorizeRequests().antMatchers("/**").permitAll()
+        httpSecurity.cors().and().csrf().disable()
+                .authorizeRequests().antMatchers("/**").permitAll()
+//                .authorizeRequests().antMatchers("/signin","/signup","/index/**","/comment/**").permitAll()
+//                .and().authorizeRequests().antMatchers("/pm/**","/orderInPm/**","/img/**","/promotion/**").hasAnyRole(String.valueOf(RoleName.PM))
+//                .and().authorizeRequests().antMatchers("/admin/**").hasAnyRole(String.valueOf(RoleName.ADMIN))
                 .anyRequest().authenticated()
                 .and().exceptionHandling()
                 .authenticationEntryPoint(jwtEntryPoint)

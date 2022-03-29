@@ -13,4 +13,5 @@ public interface IPromotionService {
     void delete(long id);
 
     Promotion findById(long id);
+    Promotion findByName(String name);
 }

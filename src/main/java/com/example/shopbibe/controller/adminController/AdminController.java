@@ -26,7 +26,7 @@ public class AdminController {
     IUserService iUserService;
     @GetMapping("/listUser")
     public ResponseEntity<Page<User>> getListUser(@RequestParam(defaultValue = "0") int pageNumber){
-        return new ResponseEntity<>(iUserService.findAll(PageRequest.of(pageNumber,5)), HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(iUserService.findAllByPnAndUser(PageRequest.of(pageNumber,5)), HttpStatus.ACCEPTED);
     }
     @GetMapping("/detailUser/{id}")
     public ResponseEntity<User> deteailUser(@PathVariable long id){
@@ -39,7 +39,13 @@ public class AdminController {
         Set<Role> roleSet = user.getRoles();
         roleSet.add(new Role(2L,RoleName.PM));
         user.setRoles(roleSet);
-        registrationService.sendMailOKUser(user);
+
+        Thread thread = new Thread(){
+            public void run(){
+                registrationService.sendMailOKUser(user);
+            }
+        };
+        thread.start();
         iUserService.save(user);
     }
     @GetMapping("/downToUser/{id}")
@@ -47,7 +53,13 @@ public class AdminController {
         User  user = iUserService.findUserByID(id);
         Set<Role> roleSet = new HashSet<>();
         roleSet.add(new Role(1L,RoleName.USER));
-        registrationService.disablePmForUser(user);
+
+        Thread thread = new Thread(){
+            public void run(){
+                registrationService.disablePmForUser(user);
+            }
+        };
+        thread.start();
         user.setRoles(roleSet);
         iUserService.save(user);
     }

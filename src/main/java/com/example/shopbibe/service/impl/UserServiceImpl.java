@@ -36,7 +36,7 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    public Page<User> findAll(Pageable pageable) {
+    public Page<User> findAllByPnAndUser(Pageable pageable) {
         return userRepository.findAll(pageable);
     }
 

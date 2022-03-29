@@ -20,6 +20,8 @@ public interface IUserRepository extends JpaRepository<User, Long> {
 
     Page<User> findAll(Pageable pageable);
 
+
+
     List<User> findAllByEmailContaining(String email);
 
     @Query(nativeQuery = true,value = "SELECT * FROM shopbi.users where users.id in( SELECT user_buyer_id FROM shopbi.orders where user_pm_id =:id group by user_buyer_id)")
